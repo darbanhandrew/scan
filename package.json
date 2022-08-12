@@ -2,6 +2,7 @@
   "name": "erp",
   "version": "0.0.1",
   "private": true,
+  "homepage": "https://app.realagroerp.uz",
   "dependencies": {
     "@awesome-cordova-plugins/barcode-scanner": "^5.44.0",
     "@awesome-cordova-plugins/core": "^5.44.0",
