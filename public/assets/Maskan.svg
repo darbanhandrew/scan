@@ -1,0 +1,23 @@
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #000;
+        stroke-miterlimit: 10;
+        stroke-width: 10px;
+      }
+    </style>
+  </defs>
+  <path class="cls-1" d="M270.19,685.5h33.7v-159h-33.7v-9.39a19.88,19.88,0,0,1,12.42-18.43L539.81,394.5h.38l257.2,104.18a19.88,19.88,0,0,1,12.42,18.43v9.39H776.1v159h33.26"/>
+  <rect class="cls-1" x="344.36" y="556.5" width="172" height="111"/>
+  <line class="cls-1" x1="344.36" y1="580.5" x2="516.36" y2="580.5"/>
+  <line class="cls-1" x1="344.36" y1="601.5" x2="516.36" y2="601.5"/>
+  <line class="cls-1" x1="344.36" y1="622.5" x2="516.36" y2="622.5"/>
+  <line class="cls-1" x1="344.36" y1="643.5" x2="516.36" y2="643.5"/>
+  <rect class="cls-1" x="562.36" y="556.5" width="172" height="111"/>
+  <line class="cls-1" x1="562.36" y1="580.5" x2="734.36" y2="580.5"/>
+  <line class="cls-1" x1="562.36" y1="601.5" x2="734.36" y2="601.5"/>
+  <line class="cls-1" x1="562.36" y1="622.5" x2="734.36" y2="622.5"/>
+  <line class="cls-1" x1="562.36" y1="643.5" x2="734.36" y2="643.5"/>
+</svg>
