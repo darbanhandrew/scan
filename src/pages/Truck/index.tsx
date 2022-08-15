@@ -9,9 +9,9 @@ import {
 	IonRow,
 	IonText
 } from "@ionic/react";
-import "./Home.css";
+import "./truck.css";
 
-const Home: React.FC = () => {
+const Truck: React.FC = () => {
 	return (
 		<IonPage class="homePage">
 			<IonGrid class="gridContainer">
@@ -64,4 +64,4 @@ const Home: React.FC = () => {
 	);
 };
 
-export default Home;
+export default Truck;
