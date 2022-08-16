@@ -22,6 +22,7 @@ import Truck from './pages/Truck';
 import Login from './pages/Login';
 import ReceiptList from './pages/ReceiptList';
 import Receipt from './pages/Receipt';
+import CheckOut from './pages/CheckOut';
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
 
@@ -83,9 +84,9 @@ const App: React.FC = () => {
 								<Route exact path="/receipt/:index">
 									<Receipt />
 								</Route>
-								{/* <Route exact path="/check-out/:index">
+								<Route exact path="/check-out/:index">
 									<CheckOut />
-								</Route> */}
+								</Route>
 								<Route exact path="/scan">
 									<Scan />
 								</Route>
