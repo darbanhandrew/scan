@@ -23,8 +23,6 @@ const Receipt: React.FC = () => {
 	const params = useParams<{ index: string | undefined }>();
 
 	const [loading, setLoading] = useState(true);
-
-	console.log('params', params, parseInt(params.index || '0'));
 	
 	const [errors, setError] = useState<{
 		supplierError: string | undefined;
@@ -39,8 +37,7 @@ const Receipt: React.FC = () => {
 	useEffect(() => {
 
 		const index = parseInt(params.index || '0')
-		console.log('check', index > 0, index < purchaseReceiptsState.receipts.length, purchaseReceiptsState.receipts.length)
-		if (index > 0 && index < purchaseReceiptsState.receipts.length) {
+		if (index >= 0 && index < purchaseReceiptsState.receipts.length) {
 			setLoading(false);
 		}
 	}, [params, purchaseReceiptsState])
