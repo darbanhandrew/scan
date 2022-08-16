@@ -42,7 +42,7 @@ import { store } from "./store";
 
 /* Theme variables */
 import "./theme/variables.css";
-import { homeOutline, scanOutline, moon } from "ionicons/icons";
+import { homeOutline, scanOutline, moon, listOutline } from "ionicons/icons";
 setupIonicReact();
 
 const App: React.FC = () => {
@@ -115,7 +115,7 @@ const App: React.FC = () => {
 									<IonLabel>Home</IonLabel>
 								</IonTabButton>
 								<IonTabButton tab="receiptList" href="/receiptList">
-									<IonIcon icon={homeOutline} />
+									<IonIcon icon={listOutline} />
 									<IonLabel>List</IonLabel>
 								</IonTabButton>
 								<IonTabButton tab="scan" href="/scan">
