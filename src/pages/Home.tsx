@@ -13,13 +13,13 @@ import "./Home.css";
 
 const Home: React.FC = () => {
 	return (
-		<IonPage class="homePage">
-			<IonGrid class="gridContainer">
+		<IonPage className="homePage">
+			<IonGrid className="gridContainer">
 				<IonRow>
 					<IonCol size="6">
 						<IonCard routerLink="/truck">
 							<IonCardContent>
-								<IonImg class="imageContainer" src="../assets/Truck.svg" />
+								<IonImg className="imageContainer" src="../assets/Truck.svg" />
 								<IonText color="dark">
 									<h4>Receive Item</h4>
 								</IonText>
@@ -29,7 +29,7 @@ const Home: React.FC = () => {
 					<IonCol size="6">
 						<IonCard routerLink="/sales">
 							<IonCardContent>
-								<IonImg class="imageContainer" src="../assets/Sales.svg" />
+								<IonImg className="imageContainer" src="../assets/Sales.svg" />
 								<IonText color="dark">
 									<h4>Send Item</h4>
 								</IonText>
@@ -41,7 +41,7 @@ const Home: React.FC = () => {
 					<IonCol size="6">
 						<IonCard routerLink="/purchase">
 							<IonCardContent>
-								<IonImg class="imageContainer" src="../assets/Purchase.svg" />
+								<IonImg className="imageContainer" src="../assets/Purchase.svg" />
 								<IonText color="dark">
 									<h4>Request Overtime or leave</h4>
 								</IonText>
@@ -51,7 +51,7 @@ const Home: React.FC = () => {
 					<IonCol size="6">
 						<IonCard routerLink="/maskan">
 							<IonCardContent>
-								<IonImg class="imageContainer" src="../assets/Maskan.svg" />
+								<IonImg className="imageContainer" src="../assets/Maskan.svg" />
 								<IonText color="dark">
 									<h4>Salary</h4>
 								</IonText>
