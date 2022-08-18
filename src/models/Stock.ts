@@ -3,6 +3,7 @@ import { RootModel } from ".";
 
 export interface Stock {
 	id?: number | undefined;
+	source?: string | undefined;
 	supplier?: string | undefined;
 	licensePlate?: string | undefined;
 	date?: string | undefined;

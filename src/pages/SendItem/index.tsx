@@ -71,7 +71,9 @@ const SendItem: React.FC = () => {
 
 			dispatch.stock.updateDraft({
 				date: new Date().toISOString(),
-				status: 'initiated'
+				status: 'initiated',
+				weight_product: (stocksState.draft.weight_car_item || 0) - (stocksState.draft.weight_car || 0),
+
 			});
 			dispatch.stock.saveDraft();
 			history.push("/home");

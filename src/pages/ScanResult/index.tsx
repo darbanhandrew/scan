@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
 	IonButton,
 	IonInput,
@@ -11,120 +11,128 @@ import {
 	IonSegmentButton
 } from "@ionic/react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { Dispatch, RootState } from "../../store";
 import "./scanResult.css";
+import Truck from '../Truck';
 
 const ScanResult: React.FC = () => {
 
 	const dispatch = useDispatch<Dispatch>();
-	const purchaseReceiptsState = useSelector((state: RootState) => state.purchaseReceipts);
+	const stocksState = useSelector((state: RootState) => state.stock);
 	const history = useHistory();
+
 	const [errors, setError] = useState<{
-		supplierError: string | undefined;
-		INNError: string | undefined;
-		weightError: string | undefined;
-		harvestError: string | undefined;
+		destFactorError: string | undefined;
+		truckItemWeightError: string | undefined;
+		licensePlateError: string | undefined;
+		stockError: string | undefined;
 	}>({
-		supplierError: undefined,
-		INNError: undefined,
-		weightError: undefined,
-		harvestError: undefined,
+		destFactorError: undefined,
+		truckItemWeightError: undefined,
+		licensePlateError: undefined,
+		stockError: undefined,
 	})
+
+	const params = useParams<{ index: string | undefined }>();
+
+	const [loading, setLoading] = useState(true);
+
+
+	useEffect(() => {
+
+		const index = parseInt(params.index || '0')
+		if (index >= 0 && index < stocksState.items.length) {
+			setLoading(false);
+		}
+	}, [params, stocksState]);
 
 	const proceed = () => {
 		
-		let supplierError: string | undefined = undefined;
-		let INNError: string | undefined = undefined;
-		let weightError: string | undefined = undefined;
-		let harvestError: string | undefined = undefined;
+		let destFactorError: string | undefined = undefined;
+		let truckItemWeightError: string | undefined = undefined;
+		let licensePlateError: string | undefined = undefined;
+		let stockError: string | undefined = undefined;
 
-		if (purchaseReceiptsState.draft.supplier === "" || purchaseReceiptsState.draft.supplier === undefined) {
+		if (stocksState.items[parseInt(params.index || "0")].destination === "" || stocksState.items[parseInt(params.index || "0")].destination === undefined) {
 
-			supplierError = "Supplier field need to be filled!";
+			destFactorError = "Destination factory field need to be filled!";
 		}
 
-		if (purchaseReceiptsState.draft.INN === "" || purchaseReceiptsState.draft.INN === undefined) {
+		if (stocksState.items[parseInt(params.index || "0")].weight_car_item === 0 || stocksState.items[parseInt(params.index || "0")].weight_car_item=== undefined) {
 
-			INNError = "INN field need to be filled!";
+			truckItemWeightError = "Truck + item weight field need to be filled!";
 		}
-		if (purchaseReceiptsState.draft.weight_car_item === 0 || purchaseReceiptsState.draft.weight_car_item === undefined) {
+		if (stocksState.items[parseInt(params.index || "0")].licensePlate === "" || stocksState.items[parseInt(params.index || "0")].licensePlate === undefined) {
 
-			weightError = "Weight field need to be filled!";
+			licensePlateError = "Plate Number field need to be filled!";
 		}
 
-		if (purchaseReceiptsState.draft.harvestMethod === "" || purchaseReceiptsState.draft.harvestMethod === undefined) {
+		if (stocksState.items[parseInt(params.index || "0")].stock === "" || stocksState.items[parseInt(params.index || "0")].stock === undefined) {
 
-			harvestError = "Harvest Method field need to be filled!";
+			stockError = "Stock field need to be filled!";
 		}
 
 		const errs = {
-			supplierError,
-			INNError,
-			weightError,
-			harvestError
+			destFactorError,
+			truckItemWeightError,
+			licensePlateError,
+			stockError
 		};
 
 		setError(errs);
 
-		if (purchaseReceiptsState.draft.supplier && purchaseReceiptsState.draft.weight_car_item && purchaseReceiptsState.draft.harvestMethod) {
+		if (stocksState.items[parseInt(params.index || "0")].destination && stocksState.items[parseInt(params.index || "0")].weight_car_item && stocksState.items[parseInt(params.index || "0")].licensePlate && stocksState.items[parseInt(params.index || "0")].stock) {
 
-			dispatch.purchaseReceipts.updateDraft({
-				date: new Date().toISOString(),
-				status: 'received'
-			});
-			dispatch.purchaseReceipts.saveDraft();
+			dispatch.stock.updateStock({
+				index: parseInt(params.index || "0"), item: {
+				status: 'cargo-underway2'
+			}});
 			history.push("/home");
 			
 		}
 	}
 
+	if (loading) return (<IonPage />);
+
 	return (
 		<IonPage className="truck">
 			<IonList className="list">
-				<IonItem className={errors.supplierError ? 'ion-invalid' : ''}>
-					<IonLabel>Supplier:</IonLabel>
+				<IonItem className={errors.destFactorError ? 'ion-invalid' : ''}>
+					<IonLabel>Destination factory:</IonLabel>
 					<IonInput
-						value={purchaseReceiptsState.draft.supplier}
-						placeholder="Select Supplier"
-						onIonChange={e => dispatch.purchaseReceipts.updateDraft({ supplier: e.detail.value ? e.detail.value : undefined })}
+						value={stocksState.items[parseInt(params.index || "0")].destination}
+						placeholder="Select Destination factory"
+						onIonChange={e => dispatch.stock.updateStock({ index: parseInt(params.index || "0"), item: { destination: e.detail.value ? e.detail.value : undefined }})}
 					/>
-					<span slot="error">{errors.supplierError || ''}</span>
+					<span slot="error">{errors.destFactorError || ''}</span>
 				</IonItem>
-				<IonItem className={errors.INNError ? 'ion-invalid' : ''}>
-					<IonLabel>INN:</IonLabel>
+				<IonItem className={errors.truckItemWeightError ? 'ion-invalid' : ''}>
+					<IonLabel>Truck + item weight:</IonLabel>
 					<IonInput
-						value={purchaseReceiptsState.draft.INN}
-						placeholder="Autofill"
-						onIonChange={e => dispatch.purchaseReceipts.updateDraft({ INN: e.detail.value ? e.detail.value : undefined })}
+						value={stocksState.items[parseInt(params.index || "0")].weight_car_item}
+						placeholder="Truck + item weight"
+						onIonChange={e => dispatch.stock.updateStock({ index: parseInt(params.index || "0"), item: { weight_car_item: e.detail.value ? parseFloat(e.detail.value) : undefined }})}
 					/>
-					<span slot="error">{errors.INNError || ''}</span>
+					<span slot="error">{errors.truckItemWeightError || ''}</span>
 				</IonItem>
-				<IonItem className={errors.weightError ? 'ion-invalid' : ''}>
-					<IonLabel>Weight (car + item):</IonLabel>
+				<IonItem className={errors.licensePlateError ? 'ion-invalid' : ''}>
+					<IonLabel>Plate Number:</IonLabel>
 					<IonInput
-						type="number"
-						value={purchaseReceiptsState.draft.weight_car_item}
-						placeholder="Weight"
-						onIonChange={e => dispatch.purchaseReceipts.updateDraft({ weight_car_item: e.detail.value ? parseFloat(e.detail.value) : undefined })}
+						value={stocksState.items[parseInt(params.index || "0")].licensePlate}
+						placeholder="Plate Number"
+						onIonChange={e => dispatch.stock.updateStock({ index: parseInt(params.index || "0"), item: { licensePlate: e.detail.value ? e.detail.value : undefined }})}
 					/>
-					<span slot="error">{errors.weightError || ''}</span>
+					<span slot="error">{errors.licensePlateError || ''}</span>
 				</IonItem>
-				<IonItem className={errors.harvestError ? 'ion-invalid' : ''}>
-					<IonLabel>Harvest method:</IonLabel>
-					<IonSegment
-						onIonChange={e => dispatch.purchaseReceipts.updateDraft({ harvestMethod: e.detail.value ? e.detail.value : undefined })}
-						value={purchaseReceiptsState.draft.harvestMethod}
-						style={{ width: "50%" }}
-					>
-						<IonSegmentButton value="hand">
-							<IonLabel>Hand</IonLabel>
-						</IonSegmentButton>
-						<IonSegmentButton value="machine">
-							<IonLabel>Machine</IonLabel>
-						</IonSegmentButton>
-					</IonSegment>
-					<span slot="error">{errors.harvestError || ''}</span>
+				<IonItem className={errors.stockError ? 'ion-invalid' : ''}>
+					<IonLabel>Choose Stock:</IonLabel>
+					<IonInput
+						value={stocksState.items[parseInt(params.index || "0")].stock}
+						placeholder="Stock"
+						onIonChange={e => dispatch.stock.updateStock({ index: parseInt(params.index || "0"), item: { stock: e.detail.value ? e.detail.value : undefined } })}
+					/>
+					<span slot="error">{errors.stockError || ''}</span>
 				</IonItem>
 				<IonItem lines="none" style={{ marginTop: '24px'}}>
 					<IonButton style={{ width: '100%', height: '38px'}} onClick={() => proceed()}>

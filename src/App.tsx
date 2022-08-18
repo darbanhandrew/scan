@@ -104,10 +104,10 @@ const App: React.FC = () => {
 								<Route exact path="/send-item-qr/:index">
 									<SendItemQR />
 								</Route>
-								<Route exact path="/scan-result">
+								<Route exact path="/scan-result/:index">
 									<ScanResult />
 								</Route>
-								<Route exact path="/direct-driver">
+								<Route exact path="/direct-driver/:index">
 									<DirectDriver />
 								</Route>
 								<Route exact path="/login">
