@@ -1,0 +1,20 @@
+.truck {
+
+    height: 100%;
+    padding: 2rem;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.list {
+
+	width: 420px;
+}
+
+/* screen width is less than 420 */
+@media (max-width: 420px) {
+	.list {
+		width: 100%;
+	}
+}

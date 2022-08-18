@@ -23,6 +23,11 @@ import Login from './pages/Login';
 import ReceiptList from './pages/ReceiptList';
 import Receipt from './pages/Receipt';
 import CheckOut from './pages/CheckOut';
+import SendItem from './pages/SendItem';
+import SendItemDest from './pages/SendItemDest';
+import ScanResult from './pages/ScanResult';
+import SendItemQR from './pages/SendItemQR';
+import DirectDriver from './pages/DirectDriver';
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
 
@@ -90,8 +95,20 @@ const App: React.FC = () => {
 								<Route exact path="/scan">
 									<Scan />
 								</Route>
-								<Route exact path="/truck">
-									<Truck />
+								<Route exact path="/send-item">
+									<SendItem />
+								</Route>
+								<Route exact path="/send-item-dest/:index">
+									<SendItemDest />
+								</Route>
+								<Route exact path="/send-item-qr/:index">
+									<SendItemQR />
+								</Route>
+								<Route exact path="/scan-result">
+									<ScanResult />
+								</Route>
+								<Route exact path="/direct-driver">
+									<DirectDriver />
 								</Route>
 								<Route exact path="/login">
 									<Login />

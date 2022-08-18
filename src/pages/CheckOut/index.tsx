@@ -47,8 +47,6 @@ const CheckOut: React.FC = () => {
 		let supplierError: string | undefined = undefined;
 		let itemError: string | undefined = undefined;
 		let carWeightError: string | undefined = undefined;
-		
-
 
 
 		if (purchaseReceiptsState.receipts[parseInt(params.index || "0")].supplier === "" || purchaseReceiptsState.receipts[parseInt(params.index || "0")].supplier === undefined) {

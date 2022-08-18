@@ -27,7 +27,7 @@ const Home: React.FC = () => {
 						</IonCard>
 					</IonCol>
 					<IonCol size="6">
-						<IonCard routerLink="/sales">
+						<IonCard routerLink="/send-item">
 							<IonCardContent>
 								<IonImg className="imageContainer" src="../assets/Sales.svg" />
 								<IonText color="dark">
