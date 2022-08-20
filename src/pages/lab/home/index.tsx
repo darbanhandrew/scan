@@ -18,8 +18,8 @@ const Home: React.FC = () => {
 				<IonRow>
 					<IonCol size="6">
 						<IonCard routerLink="/truck">
-							<IonCardContent>
-								<IonIcon icon={hourglassOutline} />
+							<IonCardContent className="card">
+								<IonIcon icon={hourglassOutline} className="icon" />
 								<IonText color="dark">
 									<h4>Request Overtime or Leave</h4>
 								</IonText>
@@ -28,8 +28,8 @@ const Home: React.FC = () => {
 					</IonCol>
 					<IonCol size="6">
 						<IonCard routerLink="/send-item">
-							<IonCardContent>
-								<IonIcon icon={archiveOutline} />
+							<IonCardContent className="card">
+								<IonIcon icon={archiveOutline} className="icon" />
 								<IonText color="dark">
 									<h4>Salary</h4>
 								</IonText>

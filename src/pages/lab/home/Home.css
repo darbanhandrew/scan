@@ -10,6 +10,13 @@
     padding: 2rem;
 }
 
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 h4 {
     font-size: 1.5rem;
     font-weight: bold;
@@ -27,13 +34,18 @@ h4 {
 
 .gridContainer {
     aspect-ratio: 1;
-    
+}
 
+.icon {
+    font-size: 64px;
 }
 
 @media screen and (orientation:portrait) {
     .gridContainer {
         width: 100%;
+    }
+    .icon {
+        font-size: 32px;
     }
 }
 
