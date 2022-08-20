@@ -35,36 +35,37 @@ const Routes = () => {
 					<Route exact path="/login">
 						<Login />
 					</Route>
-					<Route exact path="/stock/home" render={(props) => authContext.auth.userType === 'stock-manager' ? <Home /> : <Redirect to="/login" />} />
-
-					<Route exact path="/receipt/:index" render={(props) => authContext.auth.userType === 'stock-manager' ? <Receipt /> : <Redirect to="/login" />} />
-					<Route exact path="/check-out/:index" render={(props) => authContext.auth.userType === 'stock-manager' ? <CheckOut /> : <Redirect to="/login" />} />
-
-					<Route exact path="/send-item" render={(props) => authContext.auth.userType === 'stock-manager' ? <SendItem /> : <Redirect to="/login" />} />
-					<Route exact path="/send-item-dest/:index" render={(props) => authContext.auth.userType === 'stock-manager' ? <SendItemDest /> : <Redirect to="/login" />} />
-					<Route exact path="/send-item-qr/:index" render={(props) => authContext.auth.userType === 'stock-manager' ? <SendItemQR /> : <Redirect to="/login" />} />
-					<Route exact path="/scan-result/:index" render={(props) => authContext.auth.userType === 'stock-manager' ? <ScanResult /> : <Redirect to="/login" />} />
-					<Route exact path="/direct-driver/:index" render={(props) => authContext.auth.userType === 'stock-manager' ? <DirectDriver /> : <Redirect to="/login" />} />
-
-
-					<Route exact path="/accountant/home" render={(props) => authContext.auth.userType === 'accountant' ? <AccountantHome /> : <Redirect to="/login" />} />
-
-
-					<Route exact path="/lab/home" render={(props) => authContext.auth.userType === 'lab-manager' ? <LabHome /> : <Redirect to="/login" />} />
-
-					<Route exact path="/scan" render={(props) => authContext.auth.userType !== null ? <Scan /> : <Redirect to="/login" />} />
-
-					<Route exact path="/list" render={(props) => authContext.auth.userType !== null ? <ReceiptList /> : <Redirect to="/login" />} />
-
-
-
-					<Route path="*">
-						<Redirect to="/login" />
-					</Route>
+					<Route render={() => authContext.auth.userType === null ? <Redirect to="/login" /> : <Redirect to={`/${authContext.auth.prefix || 'stock'}/home`} />} />
+					
 				</IonRouterOutlet>
 				{authContext.auth.userType !== null && (
 					<IonTabs>
+						<IonRouterOutlet>
+							<Route exact path="/stock/home" render={(props) => authContext.auth.userType === 'stock-manager' ? <Home /> : <Redirect to="/login" />} />
 
+							<Route exact path="/receipt/:index" render={(props) => authContext.auth.userType === 'stock-manager' ? <Receipt /> : <Redirect to="/login" />} />
+							<Route exact path="/check-out/:index" render={(props) => authContext.auth.userType === 'stock-manager' ? <CheckOut /> : <Redirect to="/login" />} />
+
+							<Route exact path="/send-item" render={(props) => authContext.auth.userType === 'stock-manager' ? <SendItem /> : <Redirect to="/login" />} />
+							<Route exact path="/send-item-dest/:index" render={(props) => authContext.auth.userType === 'stock-manager' ? <SendItemDest /> : <Redirect to="/login" />} />
+							<Route exact path="/send-item-qr/:index" render={(props) => authContext.auth.userType === 'stock-manager' ? <SendItemQR /> : <Redirect to="/login" />} />
+							<Route exact path="/scan-result/:index" render={(props) => authContext.auth.userType === 'stock-manager' ? <ScanResult /> : <Redirect to="/login" />} />
+							<Route exact path="/direct-driver/:index" render={(props) => authContext.auth.userType === 'stock-manager' ? <DirectDriver /> : <Redirect to="/login" />} />
+
+
+							<Route exact path="/accountant/home" render={(props) => authContext.auth.userType === 'accountant' ? <AccountantHome /> : <Redirect to="/login" />} />
+
+
+							<Route exact path="/lab/home" render={(props) => authContext.auth.userType === 'lab-manager' ? <LabHome /> : <Redirect to="/login" />} />
+
+							<Route exact path="/scan" render={(props) => authContext.auth.userType !== null ? <Scan /> : <Redirect to="/login" />} />
+
+							<Route exact path="/list" render={(props) => authContext.auth.userType !== null ? <ReceiptList /> : <Redirect to="/login" />} />
+
+							<Route path="*">
+								<Redirect to={`/${authContext.auth.prefix || 'stock'}/home`} />
+							</Route>
+						</IonRouterOutlet>
 
 						<IonTabBar slot="bottom">
 							<IonTabButton tab="home" href={`/${authContext.auth.prefix || 'stock'}/home`}>
