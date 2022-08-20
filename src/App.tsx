@@ -1,14 +1,8 @@
-import { Redirect, Route } from "react-router-dom";
 import {
 	IonApp,
-	IonContent,
 	IonHeader,
 	IonIcon,
 	IonLabel,
-	IonRouterOutlet,
-	IonTabBar,
-	IonTabButton,
-	IonTabs,
 	IonTitle,
 	IonToolbar,
 	setupIonicReact,
@@ -16,18 +10,6 @@ import {
 	IonItem
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import Home from "./pages/Home";
-import Scan from "./pages/Scan/Scan";
-import Truck from './pages/Truck';
-import Login from './pages/Login';
-import ReceiptList from './pages/ReceiptList';
-import Receipt from './pages/Receipt';
-import CheckOut from './pages/CheckOut';
-import SendItem from './pages/SendItem';
-import SendItemDest from './pages/SendItemDest';
-import ScanResult from './pages/ScanResult';
-import SendItemQR from './pages/SendItemQR';
-import DirectDriver from './pages/DirectDriver';
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
 
@@ -48,7 +30,9 @@ import { store } from "./store";
 
 /* Theme variables */
 import "./theme/variables.css";
-import { homeOutline, scanOutline, moon, listOutline } from "ionicons/icons";
+import { moon } from "ionicons/icons";
+import { AuthProvider } from "./context/AuthContext";
+import Routes from "./routes";
 setupIonicReact();
 
 const App: React.FC = () => {
@@ -57,9 +41,9 @@ const App: React.FC = () => {
 		document.body.classList.toggle("dark");
 	};
 	return (
-		<IonApp>
-			<Provider store={store}>
-				<IonReactRouter>
+		<Provider store={store}>
+			<AuthProvider>
+				<IonApp>
 					<IonHeader>
 						<IonToolbar>
 							<IonItem lines="none">
@@ -77,75 +61,12 @@ const App: React.FC = () => {
 
 						</IonToolbar>
 					</IonHeader>
-					<IonContent>
-						<IonTabs>
-							<IonRouterOutlet>
-								<Route exact path="/home">
-									<Home />
-								</Route>
-								<Route exact path="/receiptList">
-									<ReceiptList />
-								</Route>
-								<Route exact path="/receipt/:index">
-									<Receipt />
-								</Route>
-								<Route exact path="/check-out/:index">
-									<CheckOut />
-								</Route>
-								<Route exact path="/scan">
-									<Scan />
-								</Route>
-								<Route exact path="/send-item">
-									<SendItem />
-								</Route>
-								<Route exact path="/send-item-dest/:index">
-									<SendItemDest />
-								</Route>
-								<Route exact path="/send-item-qr/:index">
-									<SendItemQR />
-								</Route>
-								<Route exact path="/scan-result/:index">
-									<ScanResult />
-								</Route>
-								<Route exact path="/direct-driver/:index">
-									<DirectDriver />
-								</Route>
-								<Route exact path="/login">
-									<Login />
-								</Route>
-								{/* <Route exact path="/home">
-								<Home />
-							</Route>
-							<Route exact path="/home">
-								<Home />
-							</Route>
-							<Route exact path="/home">
-								<Home />
-							</Route> */}
-								<Route exact path="/">
-									<Redirect to="/home" />
-								</Route>
+					
+					<Routes />
 
-							</IonRouterOutlet>
-							<IonTabBar slot="bottom">
-								<IonTabButton tab="home" href="/home">
-									<IonIcon icon={homeOutline} />
-									<IonLabel>Home</IonLabel>
-								</IonTabButton>
-								<IonTabButton tab="receiptList" href="/receiptList">
-									<IonIcon icon={listOutline} />
-									<IonLabel>List</IonLabel>
-								</IonTabButton>
-								<IonTabButton tab="scan" href="/scan">
-									<IonIcon icon={scanOutline} />
-									<IonLabel>Scan</IonLabel>
-								</IonTabButton>
-							</IonTabBar>
-						</IonTabs>
-					</IonContent>
-				</IonReactRouter>
-			</Provider>
-		</IonApp>
+				</IonApp>
+			</AuthProvider >
+		</Provider>
 	)
 };
 

@@ -20,7 +20,9 @@ export interface Stock {
 	complement_info2?: string | undefined;
 	qr_base64?: string | undefined;
 	harvestMethod?: string | undefined;
-	status?: 'initiated' | 'cargo-underway1' | 'cargo-underway2' | 'cargo-transferred' | undefined
+	humidity?: string | undefined;
+	purity?: string | undefined;
+	status?: 'initiated' | 'cargo-underway1' | 'cargo-underway2' | 'cargo-transferred' | 'lab-report' | undefined
 }
 
 export const stock = createModel<RootModel>()({

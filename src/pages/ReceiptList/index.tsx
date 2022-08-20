@@ -75,7 +75,7 @@ const ReceiptList: React.FC = () => {
 									? `/receipt/${index}`
 									: item.status === 'lab-accepted'
 										? `/check-out/${index}`
-										: '/receiptList'}>
+										: '/list'}>
 									<IonChip
 										color={
 											item.status === 'received'
@@ -113,6 +113,8 @@ const ReceiptList: React.FC = () => {
 														? 'danger'
 														: item.status === 'cargo-transferred'
 															? 'tertiary'
+															: item.status === 'lab-report'
+																? 'secondary'
 															: 'medium'
 										}
 									>

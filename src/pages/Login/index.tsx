@@ -26,23 +26,11 @@ const Login: React.FC = () => {
 		}
 	}
 
+	console.log('here')
+
 	return (
-		<IonPage className="truck">
-			<IonList className="list">
-				<IonItem>
-					<IonLabel>Username:</IonLabel>
-					<IonInput value={username} placeholder="Username" onIonChange={e => setUsername(e.detail.value || '')} />
-				</IonItem>
-				<IonItem>
-					<IonLabel>Password:</IonLabel>
-					<IonInput value={password} placeholder="Password" onIonChange={e => setPassword(e.detail.value || '')} />
-				</IonItem>
-				<IonItem>
-					<IonButton onClick={() => login()}>
-						Save
-					</IonButton>
-				</IonItem>
-			</IonList>
+		<IonPage>
+			<IonButton>Test</IonButton>
 		</IonPage>
 	);
 };
