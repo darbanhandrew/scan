@@ -14,16 +14,18 @@ const Scan: React.FC = () => {
   return (
     <IonPage>
       <QrReader
-              onResult={(result, error) => {
-                  if (!!result) {
-                      setData(result?.getText());
-                      window.location.href = result?.getText();
-                  }
+        onResult={(result, error) => {
+          if (!!result) {
+            setData(result?.getText());
+            window.location.href = result?.getText();
+          }
 
-                  if (!!error) {
-                      console.info(error);
-                  }
-              } } constraints={{ facingMode: 'user' }}      />
+          if (!!error) {
+            console.info(error);
+          }
+        }}
+        constraints={{ facingMode: "environment" }}
+      />
       <p>{data}</p>
     </IonPage>
   );
