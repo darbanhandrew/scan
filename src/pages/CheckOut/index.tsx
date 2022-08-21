@@ -79,7 +79,7 @@ const CheckOut: React.FC = () => {
 					weight_product: (purchaseReceiptsState.receipts[parseInt(params.index || "0")].weight_car_item || 0) - (purchaseReceiptsState.receipts[parseInt(params.index || "0")].weight_car || 0),
 				}
 			});
-			history.push("/home");
+			history.push("/tabs");
 
 		}
 	}

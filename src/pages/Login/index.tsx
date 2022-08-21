@@ -27,7 +27,7 @@ const Login: React.FC = () => {
 	const login = (user: string, prefix: string) => {
 
 		authContext.auth.login(user, prefix);
-		history.push("/home");
+		history.push("/tabs");
 	}
 
 	// const login = async () => {

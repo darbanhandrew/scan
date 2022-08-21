@@ -80,7 +80,7 @@ const DirectDriver: React.FC = () => {
 					weight_product: (stocksState.items[parseInt(params.index || "0")].weight_car_item || 0) - (stocksState.items[parseInt(params.index || "0")].weight_car || 0),
 				}
 			});
-			history.push("/home");
+			history.push("/tabs");
 
 		}
 	}

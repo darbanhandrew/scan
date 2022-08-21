@@ -72,10 +72,10 @@ const ReceiptList: React.FC = () => {
 						{purchaseReceiptsState && purchaseReceiptsState.receipts && purchaseReceiptsState.receipts.length > 0 && purchaseReceiptsState.receipts.map((item, index) => {
 							return (
 								<IonItem key={index} href={item.status === 'received'
-									? `/receipt/${index}`
+									? `/tabs/receipt/${index}`
 									: item.status === 'lab-accepted'
-										? `/check-out/${index}`
-										: '/list'}>
+										? `/tabs/check-out/${index}`
+										: '/tabs/list'}>
 									<IonChip
 										color={
 											item.status === 'received'
@@ -99,10 +99,10 @@ const ReceiptList: React.FC = () => {
 							{stocksState && stocksState.items && stocksState.items.length > 0 && stocksState.items.map((item, index) => {
 							return (
 								<IonItem key={index} href={item.status === 'initiated'
-									? `/send-item-dest/${index}`
+									? `/tabs/send-item-dest/${index}`
 									: item.status === 'cargo-underway1'
-										? `/scan-result/${index}`
-										: `/direct-driver/${index}`}>
+										? `/tabs/scan-result/${index}`
+										: `/tabs/direct-driver/${index}`}>
 									<IonChip
 										color={
 											item.status === 'initiated'

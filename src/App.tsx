@@ -7,7 +7,9 @@ import {
 	IonToolbar,
 	setupIonicReact,
 	IonToggle,
-	IonItem
+	IonItem,
+	IonMenuButton,
+	IonButtons
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 /* Core CSS required for Ionic components to work properly */
@@ -33,35 +35,24 @@ import "./theme/variables.css";
 import { moon } from "ionicons/icons";
 import { AuthProvider } from "./context/AuthContext";
 import Routes from "./routes";
+import Menu from "./components/menu";
 setupIonicReact();
 
 const App: React.FC = () => {
 
-	const toggleDarkModeHandler = () => {
-		document.body.classList.toggle("dark");
-	};
 	return (
 		<Provider store={store}>
 			<AuthProvider>
 				<IonApp>
 					<IonHeader>
 						<IonToolbar>
-							<IonItem lines="none">
-								<IonTitle slot="start">Real Agro ERP</IonTitle>
-								<IonItem slot="end" lines="none">
-									<IonIcon slot="start" icon={moon} />
-									<IonLabel>Dark Mode</IonLabel>
-									<IonToggle
-										slot="end"
-										name="darkMode"
-										onIonChange={toggleDarkModeHandler}
-									/>
-								</IonItem>
-							</IonItem>
-
+							<IonTitle>Real Agro ERP</IonTitle>
+							<IonButtons slot="end" style={{ width: '40px', height: '40px'}}>
+								<IonMenuButton />
+							</IonButtons>
+							
 						</IonToolbar>
 					</IonHeader>
-					
 					<Routes />
 
 				</IonApp>

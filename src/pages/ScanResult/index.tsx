@@ -88,7 +88,7 @@ const ScanResult: React.FC = () => {
 				index: parseInt(params.index || "0"), item: {
 				status: 'cargo-underway2'
 			}});
-			history.push("/home");
+			history.push("/tabs");
 			
 		}
 	}

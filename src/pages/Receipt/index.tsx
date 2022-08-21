@@ -78,7 +78,7 @@ const Receipt: React.FC = () => {
 				index: parseInt(params.index || "0"), receipt: {
 				status: 'lab-accepted'
 			}});
-			history.push("/home");
+			history.push("/tabs");
 
 		}
 	}

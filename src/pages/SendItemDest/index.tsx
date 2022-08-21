@@ -69,7 +69,7 @@ const SendItemDest: React.FC = () => {
 					weight_product: (stocksState.items[parseInt(params.index || "0")].weight_car_item || 0) - (stocksState.items[parseInt(params.index || "0")].weight_car || 0),
 				}
 			});
-			history.push(`/send-item-qr/${parseInt(params.index || "0")}`);
+			history.push(`/tabs/send-item-qr/${parseInt(params.index || "0")}`);
 
 		}
 	}

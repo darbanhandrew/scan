@@ -74,7 +74,7 @@ const Truck: React.FC = () => {
 				status: 'received'
 			});
 			dispatch.purchaseReceipts.saveDraft();
-			history.push("/home");
+			history.push("/tabs");
 			
 		}
 	}

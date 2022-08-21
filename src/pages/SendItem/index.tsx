@@ -76,7 +76,7 @@ const SendItem: React.FC = () => {
 
 			});
 			dispatch.stock.saveDraft();
-			history.push("/home");
+			history.push("/tabs");
 			
 		}
 	}
