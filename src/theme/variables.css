@@ -3,6 +3,9 @@ http://ionicframework.com/docs/theming/ */
 
 /** Ionic CSS Variables **/
 :root {
+
+	--ion-font-family: poppins;
+
 	--ion-color-primary: #0699EF;
 	--ion-color-primary-rgb: 6,153,239;
 	--ion-color-primary-contrast: #ffffff;
