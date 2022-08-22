@@ -34,6 +34,7 @@ const Menu: React.FC = () => {
 						<IonButton
 							onClick={() => {
 								if (authContext.auth.userType) {
+									console.log(authContext.auth.userType, 'logged out');
 									authContext.auth.logout();
 									history.push('/login');
 								} else {

@@ -35,7 +35,7 @@ import "./theme/variables.css";
 import { moon } from "ionicons/icons";
 import { AuthProvider } from "./context/AuthContext";
 import Routes from "./routes";
-import Menu from "./components/menu";
+// import Menu from "./components/menu";
 setupIonicReact();
 
 const App: React.FC = () => {
@@ -47,10 +47,10 @@ const App: React.FC = () => {
 					<IonHeader>
 						<IonToolbar>
 							<IonTitle>Real Agro ERP</IonTitle>
-							<IonButtons slot="end" style={{ width: '40px', height: '40px'}}>
+							{/* <IonButtons slot="end" style={{ width: '40px', height: '40px'}}>
 								<IonMenuButton />
 							</IonButtons>
-							
+							 */}
 						</IonToolbar>
 					</IonHeader>
 					<Routes />

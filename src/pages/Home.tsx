@@ -17,7 +17,7 @@ const Home: React.FC = () => {
 			<IonGrid className="gridContainer">
 				<IonRow>
 					<IonCol size="6">
-						<IonCard routerLink="/truck">
+						<IonCard routerLink="/tabs/stock/check-in">
 							<IonCardContent>
 								<IonImg className="imageContainer" src="../assets/Truck.svg" />
 								<IonText color="dark">
@@ -27,7 +27,7 @@ const Home: React.FC = () => {
 						</IonCard>
 					</IonCol>
 					<IonCol size="6">
-						<IonCard routerLink="/send-item">
+						<IonCard routerLink="/tabs/send-item">
 							<IonCardContent>
 								<IonImg className="imageContainer" src="../assets/Sales.svg" />
 								<IonText color="dark">

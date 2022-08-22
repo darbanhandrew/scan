@@ -1,10 +1,10 @@
 import { IonContent, IonRouterOutlet } from "@ionic/react";
 import { useContext } from "react";
-import { Route } from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import Login from "../pages/Login";
 import { IonReactRouter } from "@ionic/react-router";
-import Menu from "../components/menu";
+// import Menu from "../components/menu";
 import TabBar from "../components/tab-bar";
 
 
@@ -15,13 +15,16 @@ const Routes = () => {
 	return (
 		<IonContent>
 			<IonReactRouter>
-				<Menu />
+				{/* <Menu /> */}
 				<IonRouterOutlet id="main">
 
 					<Route path="/tabs" component={TabBar} />
 					<Route exact path="/login">
 						<Login />
 					</Route>
+					{/* <Route exact path="*">
+						<Redirect to="/login" />
+					</Route> */}
 				</IonRouterOutlet>
 
 				{/* <Route render={() => authContext.auth.userType === null ? <Redirect to="/login" /> : <Redirect to={`/${authContext.auth.prefix || 'stock'}/home`} />} /> */}

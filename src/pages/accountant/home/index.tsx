@@ -17,7 +17,7 @@ const Home: React.FC = () => {
 			<IonGrid className="gridContainer">
 				<IonRow>
 					<IonCol size="6">
-						<IonCard routerLink="/truck">
+						<IonCard routerLink="/tabs/stock/check-in">
 							<IonCardContent className="card">
 								<IonIcon icon={clipboardOutline} className="icon" />
 								<IonText color="dark">
@@ -27,7 +27,7 @@ const Home: React.FC = () => {
 						</IonCard>
 					</IonCol>
 					<IonCol size="6">
-						<IonCard routerLink="/send-item">
+						<IonCard routerLink="/tabs/send-item">
 							<IonCardContent className="card">
 								<IonIcon icon={calculatorOutline} className="icon" />
 								<IonText color="dark">
@@ -39,7 +39,7 @@ const Home: React.FC = () => {
 				</IonRow>
 				<IonRow>
 					<IonCol size="6">
-						<IonCard routerLink="/truck">
+						<IonCard routerLink="/tabs/stock/check-in">
 							<IonCardContent className="card">
 								<IonIcon icon={cashOutline} className="icon" />
 								<IonText color="dark">
@@ -49,7 +49,7 @@ const Home: React.FC = () => {
 						</IonCard>
 					</IonCol>
 					<IonCol size="6">
-						<IonCard routerLink="/send-item">
+						<IonCard routerLink="/tabs/send-item">
 							<IonCardContent className="card">
 								<IonIcon icon={listOutline} className="icon" />
 								<IonText color="dark">
@@ -61,7 +61,7 @@ const Home: React.FC = () => {
 				</IonRow>
 				<IonRow>
 					<IonCol size="6">
-						<IonCard routerLink="/truck">
+						<IonCard routerLink="/tabs/stock/check-in">
 							<IonCardContent className="card">
 								<IonIcon icon={cellularOutline} className="icon" />
 								<IonText color="dark">
@@ -71,7 +71,7 @@ const Home: React.FC = () => {
 						</IonCard>
 					</IonCol>
 					<IonCol size="6">
-						<IonCard routerLink="/send-item">
+						<IonCard routerLink="/tabs/send-item">
 							<IonCardContent className="card">
 								<IonIcon icon={paperPlaneOutline} className="icon" />
 								<IonText color="dark">
@@ -83,7 +83,7 @@ const Home: React.FC = () => {
 				</IonRow>
 				<IonRow>
 					<IonCol size="6">
-						<IonCard routerLink="/truck">
+						<IonCard routerLink="/tabs/stock/check-in">
 							<IonCardContent className="card">
 								<IonIcon icon={menuOutline} className="icon" />
 								<IonText color="dark">
@@ -93,7 +93,7 @@ const Home: React.FC = () => {
 						</IonCard>
 					</IonCol>
 					<IonCol size="6">
-						<IonCard routerLink="/send-item">
+						<IonCard routerLink="/tabs/send-item">
 							<IonCardContent className="card">
 								<IonIcon icon={appsOutline} className="icon" />
 								<IonText color="dark">
@@ -105,7 +105,7 @@ const Home: React.FC = () => {
 				</IonRow>
 				<IonRow>
 					<IonCol size="6">
-						<IonCard routerLink="/truck">
+						<IonCard routerLink="/tabs/stock/check-in">
 							<IonCardContent className="card">
 								<IonIcon icon={attachOutline} className="icon" />
 								<IonText color="dark">
@@ -115,7 +115,7 @@ const Home: React.FC = () => {
 						</IonCard>
 					</IonCol>
 					<IonCol size="6">
-						<IonCard routerLink="/send-item">
+						<IonCard routerLink="/tabs/send-item">
 							<IonCardContent className="card">
 								<IonIcon icon={peopleCircleOutline} className="icon" />
 								<IonText color="dark">
@@ -127,7 +127,7 @@ const Home: React.FC = () => {
 				</IonRow>
 				<IonRow>
 					<IonCol size="6">
-						<IonCard routerLink="/truck">
+						<IonCard routerLink="/tabs/stock/check-in">
 							<IonCardContent className="card">
 								<IonIcon icon={contractOutline} className="icon" />
 								<IonText color="dark">
@@ -137,7 +137,7 @@ const Home: React.FC = () => {
 						</IonCard>
 					</IonCol>
 					<IonCol size="6">
-						<IonCard routerLink="/send-item">
+						<IonCard routerLink="/tabs/send-item">
 							<IonCardContent className="card">
 								<IonIcon icon={homeOutline} className="icon" />
 								<IonText color="dark">
@@ -149,7 +149,7 @@ const Home: React.FC = () => {
 				</IonRow>
 				<IonRow>
 					<IonCol size="6">
-						<IonCard routerLink="/truck">
+						<IonCard routerLink="/tabs/stock/check-in">
 							<IonCardContent className="card">
 								<IonIcon icon={personAddOutline} className="icon" />
 								<IonText color="dark">
@@ -159,7 +159,7 @@ const Home: React.FC = () => {
 						</IonCard>
 					</IonCol>
 					<IonCol size="6">
-						<IonCard routerLink="/send-item">
+						<IonCard routerLink="/tabs/send-item">
 							<IonCardContent className="card">
 								<IonIcon icon={medkitOutline} className="icon" />
 								<IonText color="dark">
@@ -171,7 +171,7 @@ const Home: React.FC = () => {
 				</IonRow>
 				<IonRow>
 					<IonCol size="6">
-						<IonCard routerLink="/truck">
+						<IonCard routerLink="/tabs/stock/check-in">
 							<IonCardContent className="card">
 								<IonIcon icon={cubeOutline} className="icon" />
 								<IonText color="dark">
@@ -181,7 +181,7 @@ const Home: React.FC = () => {
 						</IonCard>
 					</IonCol>
 					<IonCol size="6">
-						<IonCard routerLink="/send-item">
+						<IonCard routerLink="/tabs/send-item">
 							<IonCardContent className="card">
 								<IonIcon icon={squareOutline} className="icon" />
 								<IonText color="dark">
@@ -193,7 +193,7 @@ const Home: React.FC = () => {
 				</IonRow>
 				<IonRow>
 					<IonCol size="6">
-						<IonCard routerLink="/truck">
+						<IonCard routerLink="/tabs/stock/check-in">
 							<IonCardContent className="card">
 								<IonIcon icon={hourglassOutline} className="icon" />
 								<IonText color="dark">
@@ -203,7 +203,7 @@ const Home: React.FC = () => {
 						</IonCard>
 					</IonCol>
 					<IonCol size="6">
-						<IonCard routerLink="/send-item">
+						<IonCard routerLink="/tabs/send-item">
 							<IonCardContent className="card">
 								<IonIcon icon={archiveOutline} className="icon" />
 								<IonText color="dark">

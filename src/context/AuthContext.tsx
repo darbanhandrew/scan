@@ -50,10 +50,13 @@ function useProvideAuth() {
 	const [prefix, setPrefix] = useState<string | null>(null);
 
 	const login = (userType: string, prefix: string) => {
+
+		console.log('user type', userType)
 		setPrefix(prefix);
 		setUserType(userType);
 	};
 	const logout = () => {
+		console.log('user type', 'logout')
 		setUserType(null);
 	};
 

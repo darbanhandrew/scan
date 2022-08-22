@@ -17,7 +17,7 @@ const Home: React.FC = () => {
 			<IonGrid className="gridContainer">
 				<IonRow>
 					<IonCol size="6">
-						<IonCard routerLink="/truck">
+						<IonCard routerLink="/tabs/stock/check-in">
 							<IonCardContent className="card">
 								<IonIcon icon={hourglassOutline} className="icon" />
 								<IonText color="dark">
