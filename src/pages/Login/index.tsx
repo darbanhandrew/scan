@@ -1,19 +1,18 @@
+
 import {
 	IonButton,
+	IonImg,
 	IonInput,
-	IonItem,
 	IonLabel,
-	IonList,
 	IonPage,
-	IonSegment,
-	IonSegmentButton,
 	IonText
 } from "@ionic/react";
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useHistory } from "react-router";
 import AuthContext from "../../context/AuthContext";
 import "./login.css";
 import FrappeClient from '../../util/FrappeNode';
+import StyledInput from "../../theme/components/Input";
 // import AxiosClient from '../../config/AxiosConfig';
 
 const Login: React.FC = () => {
@@ -23,8 +22,8 @@ const Login: React.FC = () => {
 
 	const history = useHistory();
 	const authContext = useContext(AuthContext);
-	
-	
+
+
 	// const login = (user: string, prefix: string) => {
 
 	// 	authContext.auth.login(user, prefix);
@@ -48,41 +47,48 @@ const Login: React.FC = () => {
 
 	return (
 		<IonPage className="container">
-			<IonList>
-				{/* <IonItem>
+			<div className="form-container">
+				{/* <div>
 					<IonText style={{ width: '100%', textAlign: 'center' }}>Which user you want to login as?</IonText>
-				</IonItem>
-				<IonItem>
+				</div>
+				<div>
 					<IonButton color="warning" style={{ width: '100%' }} onClick={() => login('stock-manager', 'stock')}>Warehouse Manager</IonButton>
-				</IonItem>
-				<IonItem>
+				</div>
+				<div>
 					<IonButton color="secondary" style={{ width: '100%' }} onClick={() => login('lab-manager', 'lab')}>Lab Manager</IonButton>
-				</IonItem>
-				<IonItem>
+				</div>
+				<div>
 					<IonButton style={{ width: '100%' }} onClick={() => login('accountant', 'accountant')}>Accountant</IonButton>
-				</IonItem> */}
-				<IonItem>
+				</div> */}
+				<div className="single-item-container">
+					<IonImg src="../assets/logo4.svg" slot="" />
+				</div>
+				<div className="single-item-container">
+					<IonText style={{ width: '100%', textAlign: 'center'}}><h4>Real Agro ERP</h4></IonText>
+				</div>
+				<div className="item-container">
 					<IonLabel>Username</IonLabel>
-					<IonInput
+					<StyledInput
 						value={username}
 						placeholder="Username"
-						
+
 						onIonChange={e => setUsername(e.detail.value || '')}
 					/>
-				</IonItem>
-				<IonItem>
+				</div>
+				<div className="item-container">
 					<IonLabel>Password</IonLabel>
-					<IonInput
+					<StyledInput
+
 						value={password}
 						placeholder="Password"
 						type="password"
 						onIonChange={e => setPassword(e.detail.value || '')}
 					/>
-				</IonItem>
-				<IonItem style={{ height: '42px' }} lines="none">
+				</div>
+				<div className="single-item-container">
 					<IonButton color="primary" style={{ width: '100%' }} onClick={() => login()}>Login</IonButton>
-				</IonItem>
-			</IonList>
+				</div>
+			</div>
 		</IonPage>
 	);
 };
