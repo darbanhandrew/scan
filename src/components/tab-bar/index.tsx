@@ -58,7 +58,7 @@ const TabBar: React.FC = () => {
 				{/* <Route exact path="*" render={(props) => authContext.auth.userType !== null ? <Redirect to={`/tabs/${authContext.auth.prefix || 'stock'}/home`} /> : <Redirect to="/login" />} /> */}
 			</IonRouterOutlet>
 
-			<IonTabBar slot="bottom">
+			<IonTabBar slot="bottom" color="secondary">
 				<IonTabButton tab="home" href={`/tabs/${authContext.auth.prefix || 'stock'}/home`}>
 					<IonIcon icon={homeOutline} />
 					<IonLabel>Home</IonLabel>
