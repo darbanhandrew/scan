@@ -1,6 +1,34 @@
 .container {
-	    height: 100%;
+	height: 100%;
     padding: 2rem;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.form-container {
+	width: 100%;
+	max-width: 420px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.single-item-container {
+
+	width: 100%;
+	padding: 0;
+	margin-bottom: 12px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.item-container {
+	width: 100%;
+	padding: 0;
+	gap: 8px;
+	margin-bottom: 12px;
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;

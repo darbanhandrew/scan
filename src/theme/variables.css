@@ -1,21 +1,25 @@
 /* Ionic Variables and Theming. For more info, please see:
 http://ionicframework.com/docs/theming/ */
+@import url(../assets/fonts/Poppins/style.css);
 
 /** Ionic CSS Variables **/
 :root {
-	--ion-color-primary: #0699EF;
-	--ion-color-primary-rgb: 6,153,239;
+
+	--ion-font-family: 'Poppins', sans-serif;
+
+		--ion-color-primary: #0580C7;
+	--ion-color-primary-rgb: 5,128,199;
 	--ion-color-primary-contrast: #ffffff;
 	--ion-color-primary-contrast-rgb: 255,255,255;
-	--ion-color-primary-shade: #0587d2;
-	--ion-color-primary-tint: #1fa3f1;
+	--ion-color-primary-shade: #0471af;
+	--ion-color-primary-tint: #1e8dcd;
 
-	--ion-color-secondary: #25E4E1;
-	--ion-color-secondary-rgb: 37,228,225;
-	--ion-color-secondary-contrast: #000000;
-	--ion-color-secondary-contrast-rgb: 0,0,0;
-	--ion-color-secondary-shade: #21c9c6;
-	--ion-color-secondary-tint: #3be7e4;
+	--ion-color-secondary: #14A3A1;
+	--ion-color-secondary-rgb: 20,163,161;
+	--ion-color-secondary-contrast: #ffffff;
+	--ion-color-secondary-contrast-rgb: 255,255,255;
+	--ion-color-secondary-shade: #128f8e;
+	--ion-color-secondary-tint: #2cacaa;
 
 	--ion-color-tertiary: #5260ff;
 	--ion-color-tertiary-rgb: 82,96,255;
