@@ -1,6 +1,11 @@
 import { get_args } from './Helpers';
 import axios from 'axios';
+import { wrapper } from 'axios-cookiejar-support';
+import { CookieJar } from 'tough-cookie';
 // const dns = require('dns');
+
+const jar = new CookieJar();
+const client = wrapper(axios.create({ jar }));
 
 
 export const resolve_request = (url, data=null, sid=null) => {
@@ -8,7 +13,7 @@ export const resolve_request = (url, data=null, sid=null) => {
 		if (data) {
 			data = JSON.stringify(data);
 		}
-		axios.request(url, get_args(data, sid))
+		client.request(url, get_args(data, sid))
 				.then((json) => resolve(json))
 			.catch((rej) => {
 				reject(rej);
