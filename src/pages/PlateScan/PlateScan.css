@@ -1,0 +1,36 @@
+.page {
+	/* center children */
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+}
+
+.con {
+
+    height: 100%;
+    padding: 2rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	width: 420px;
+}
+
+.camera {
+	/* width equal to container width and height equal to width */
+	aspect-ratio: 1/1;
+	width: 100%;
+}
+
+.upButton {
+	height: 42px;
+	width: 100%;
+}
+
+/* screen width is less than 420 */
+@media (max-width: 420px) {
+	.list {
+		c: 100%;
+	}
+}

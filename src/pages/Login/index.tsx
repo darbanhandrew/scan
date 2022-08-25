@@ -11,7 +11,7 @@ import React, { useContext, useState } from "react";
 import { useHistory } from "react-router";
 import AuthContext from "../../context/AuthContext";
 import "./login.css";
-import FrappeClient from '../../util/FrappeNode';
+import FrappeClient, { FrappeRequestManager } from '../../util/FrappeNode';
 import StyledInput from "../../theme/components/Input";
 // import AxiosClient from '../../config/AxiosConfig';
 
@@ -32,6 +32,8 @@ const Login: React.FC = () => {
 
 	const login = async () => {
 
+		await FrappeRequestManager.listDocuments('Account');
+
 		if (username !== "" && username !== undefined && password !== "" && password !== undefined) {
 
 			// const loginData = AxiosClient.post('https://dev.realagroerp.uz/api/method/login', { usr: username, pwd: password });
@@ -42,6 +44,7 @@ const Login: React.FC = () => {
 				authContext.auth.login('stock-manager', 'stock');
 				history.push("/tabs");
 			}
+			
 		}
 	}
 

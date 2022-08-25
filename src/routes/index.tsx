@@ -6,6 +6,7 @@ import Login from "../pages/Login";
 import { IonReactRouter } from "@ionic/react-router";
 // import Menu from "../components/menu";
 import TabBar from "../components/tab-bar";
+import ReadPlate from "../pages/PlateScan";
 
 
 const Routes = () => {

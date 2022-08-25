@@ -4,7 +4,13 @@ import {
 	GET_DOC, GET_LIST, GET_META
 } from './Constants';
 import { resolve_request } from './Internet';
+// import ClientOAuth2 from 'client-oauth2';
 
+import ConfiguredAxios from '../config/AxiosConfig';
+import axios from 'axios';
+
+const Secret = "43c8661f5567f8d";
+const Key = "9ede50b2450c6de";
 
 // const process_request = (doctype, data, url) => {
 // 	return new Promise((resolve, reject) => {
@@ -24,6 +30,8 @@ import { resolve_request } from './Internet';
 // 		})
 // 	});
 // }
+
+
 
 export default class FrappeNode {
 
@@ -54,7 +62,7 @@ export default class FrappeNode {
 			} catch (err) {
 				console.log(err);
 			}
-				
+
 		} else {
 			console.log('Site_name, email and password required.');
 		}
@@ -148,3 +156,93 @@ export default class FrappeNode {
 	// }
 }
 
+// const realAgroAuth = new ClientOAuth2({
+// 	clientId: 'realagroerp',
+// 	clientSecret: 'Mdb@@1374',
+// 	accessTokenUri: 'https://realagroerp.uz/api/method/frappe.integrations.oauth2.get_token',
+// 	authorizationUri: 'https://realagroerp.uz/api/method/frappe.integrations.oauth2.authorize',
+// 	redirectUri: 'https://realagroerp.uz/api/method/frappe.www.login.login_via_frappe',
+// 	scopes: ['openid']
+// })
+
+export const FrappeRequestManager = {
+
+	// login: () => {
+	// 	window.oauth2Callback = function (uri: sting) {
+	// 		realAgroAuth.token.getToken(uri)
+	// 			.then(function (user) {
+	// 				console.log(user) //=> { accessToken: '...', tokenType: 'bearer', ... }
+
+	// 				// Make a request to the github API for the current user.
+	// 				return popsicle.request(user.sign({
+	// 					method: 'get',
+	// 					url: 'https://api.github.com/user'
+	// 				})).then(function (res) {
+	// 					console.log(res) //=> { body: { ... }, status: 200, headers: { ... } }
+	// 				})
+	// 			})
+	// 	}
+	// }
+	/* login: async () => {
+	? 	const resp = await axios.post('http://realagroerp.uz/api/method/frappe.auth.get_logged_user', { 'Authorization': 'token 9ede50b2450c6de:43c8661f5567f8d' })
+	 }, */
+
+	listDocuments: async (doctype: string) => {
+
+		try {
+			const resp = await ConfiguredAxios.get(`/resource/${doctype}`);
+			console.log('success', resp);
+		} catch (err) {
+
+			console.log(err);
+		}
+	},
+	getDocument: async (doctype: string, id: string) => {
+		try {
+			const resp = await ConfiguredAxios.get(`/resource/${doctype}/${id}`);
+			console.log('success', resp);
+		} catch (err) {
+
+			console.log(err);
+		}
+	},
+	addDocument: async (doctype: string, data: Record<string, any>) => {
+		try {
+			const options = {
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded',
+				},
+			};
+			const form = new URLSearchParams();
+			for (const key in data) {
+				if (Object.prototype.hasOwnProperty.call(data, key)) {
+					const element = data[key];
+					form.append(key, element);
+				}
+			}
+			const resp = await ConfiguredAxios.post(`/resource/${doctype}`, form, options);
+			console.log('success', resp);
+		} catch (err) {
+
+			console.log(err);
+		}
+	},
+	editDocument: async (doctype: string, id: string, data: Record<string, any>) => {
+		try {
+			const resp = await ConfiguredAxios.put(`/resource/${doctype}/${id}`, data);
+			console.log('success', resp);
+		} catch (err) {
+
+			console.log(err);
+		}
+	},
+	removeDocument: async (doctype: string, id: string) => {
+		try {
+			const resp = await ConfiguredAxios.delete(`/resource/${doctype}/${id}`);
+			console.log('success', resp);
+		} catch (err) {
+
+			console.log(err);
+		}
+	}
+};

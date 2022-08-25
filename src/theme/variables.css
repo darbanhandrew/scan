@@ -6,6 +6,7 @@ http://ionicframework.com/docs/theming/ */
 :root {
 
 	--ion-font-family: 'Poppins', sans-serif;
+	--ion-background-color: #F0F4FD;
 
 		--ion-color-primary: #0580C7;
 	--ion-color-primary-rgb: 5,128,199;

@@ -17,6 +17,7 @@ import Truck from "../../pages/Truck";
 // import Menu from "../menu";
 import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
+import ReadPlate from "../../pages/PlateScan";
 
 
 const TabBar: React.FC = () => {
@@ -28,7 +29,7 @@ const TabBar: React.FC = () => {
 			{/* <Menu /> */}
 			<IonRouterOutlet id="tab">
 				<Route exact path="/tabs/stock/home" render={(props) => authContext.auth.userType === 'stock-manager' ? <Home /> : <Redirect to="/login" />} />
-				
+				<Route exact path="/tabs/stock/read-plate" render={(props) => authContext.auth.userType === 'stock-manager' ? <ReadPlate /> : <Redirect to="/login" />} />
 				<Route exact path="/tabs/stock/check-in" render={(props) => authContext.auth.userType === 'stock-manager' ? <Truck /> : <Redirect to="/login" />} />
 				<Route exact path="/tabs/receipt/:index" render={(props) => {
 					console.log(authContext.auth.userType === 'stock-manager', authContext.auth.userType)
