@@ -44,15 +44,6 @@ const App: React.FC = () => {
 		<Provider store={store}>
 			<AuthProvider>
 				<IonApp>
-					<IonHeader>
-						<IonToolbar color="primary">
-							<IonTitle>Real Agro ERP</IonTitle>
-							{/* <IonButtons slot="end" style={{ width: '40px', height: '40px'}}>
-								<IonMenuButton />
-							</IonButtons>
-							 */}
-						</IonToolbar>
-					</IonHeader>
 					<Routes />
 
 				</IonApp>

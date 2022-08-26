@@ -8,22 +8,22 @@ http://ionicframework.com/docs/theming/ */
 	--ion-font-family: 'Poppins', sans-serif;
 	--ion-background-color: #F0F4FD;
 
-		--ion-color-primary: #0580C7;
-	--ion-color-primary-rgb: 5,128,199;
+	--ion-color-primary: #5A55CA;
+	--ion-color-primary-rgb: 90, 85, 202;
 	--ion-color-primary-contrast: #ffffff;
 	--ion-color-primary-contrast-rgb: 255,255,255;
-	--ion-color-primary-shade: #0471af;
-	--ion-color-primary-tint: #1e8dcd;
+	--ion-color-primary-shade: #312C8C;
+	--ion-color-primary-tint: #9692DD;
 
-	--ion-color-secondary: #14A3A1;
+	--ion-color-secondary: #5CEBE8;
 	--ion-color-secondary-rgb: 20,163,161;
 	--ion-color-secondary-contrast: #ffffff;
 	--ion-color-secondary-contrast-rgb: 255,255,255;
-	--ion-color-secondary-shade: #128f8e;
-	--ion-color-secondary-tint: #2cacaa;
+	--ion-color-secondary-shade: #25E4E1;
+	--ion-color-secondary-tint: #A4F4F2;
 
 	--ion-color-tertiary: #5260ff;
-	--ion-color-tertiary-rgb: 82,96,255;
+	--ion-color-tertiary-rgb: 92, 235, 232;
 	--ion-color-tertiary-contrast: #ffffff;
 	--ion-color-tertiary-contrast-rgb: 255,255,255;
 	--ion-color-tertiary-shade: #4854e0;

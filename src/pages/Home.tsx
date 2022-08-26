@@ -13,25 +13,26 @@ import "./Home.css";
 
 const Home: React.FC = () => {
 	return (
-		<IonPage className="homePage">
-			<IonGrid className="gridContainer">
+		<IonPage className="home-page">
+			<div className="heading-container"><IonText color="primary" class="heading">Home</IonText></div>
+			<IonGrid className="grid-container">
 				<IonRow>
 					<IonCol size="6">
-						<IonCard routerLink="/tabs/stock/read-plate">
-							<IonCardContent>
-								<IonImg className="imageContainer" src="../assets/Truck.svg" />
-								<IonText color="dark">
-									<h4>Receive Item</h4>
+						<IonCard routerLink="/tabs/stock/read-plate" class="ion-card">
+							<IonCardContent class="ion-card-content">
+								<IonImg className="image-container" src="../assets/HomeIcons/ReceiveItem.svg" />
+								<IonText color="primary" class="item-text">
+									Receive Item
 								</IonText>
 							</IonCardContent>
 						</IonCard>
 					</IonCol>
 					<IonCol size="6">
-						<IonCard routerLink="/tabs/send-item">
-							<IonCardContent>
-								<IonImg className="imageContainer" src="../assets/Sales.svg" />
-								<IonText color="dark">
-									<h4>Send Item</h4>
+						<IonCard routerLink="/tabs/send-item" class="ion-card">
+							<IonCardContent class="ion-card-content">
+								<IonImg className="image-container" src="../assets/HomeIcons/SendItem.svg" />
+								<IonText color="primary" class="item-text">
+									Send Item
 								</IonText>
 							</IonCardContent>
 						</IonCard>
@@ -39,21 +40,21 @@ const Home: React.FC = () => {
 				</IonRow>
 				<IonRow>
 					<IonCol size="6">
-						<IonCard routerLink="/purchase">
-							<IonCardContent>
-								<IonImg className="imageContainer" src="../assets/Purchase.svg" />
-								<IonText color="dark">
-									<h4>Request Overtime or leave</h4>
+						<IonCard routerLink="/purchase" class="ion-card">
+							<IonCardContent class="ion-card-content">
+								<IonImg className="image-container" src="../assets/HomeIcons/RequestOvertime.svg" />
+								<IonText color="primary" class="item-text">
+									Request Overtime or leave
 								</IonText>
 							</IonCardContent>
 						</IonCard>
 					</IonCol>
 					<IonCol size="6">
-						<IonCard routerLink="/maskan">
-							<IonCardContent>
-								<IonImg className="imageContainer" src="../assets/Maskan.svg" />
-								<IonText color="dark">
-									<h4>Salary</h4>
+						<IonCard routerLink="/maskan" class="ion-card">
+							<IonCardContent class="ion-card-content">
+								<IonImg className="image-container" src="../assets/HomeIcons/Salary.svg" />
+								<IonText color="primary" class="item-text">
+									Salary
 								</IonText>
 							</IonCardContent>
 						</IonCard>

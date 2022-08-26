@@ -1,6 +1,7 @@
 
 import {
 	IonButton,
+	IonIcon,
 	IonImg,
 	IonInput,
 	IonLabel,
@@ -13,6 +14,8 @@ import AuthContext from "../../context/AuthContext";
 import "./login.css";
 import FrappeClient, { FrappeRequestManager } from '../../util/FrappeNode';
 import StyledInput from "../../theme/components/Input";
+import StyledButton from "../../theme/components/Button";
+import { arrowForward } from "ionicons/icons";
 // import AxiosClient from '../../config/AxiosConfig';
 
 const Login: React.FC = () => {
@@ -44,7 +47,7 @@ const Login: React.FC = () => {
 				authContext.auth.login('stock-manager', 'stock');
 				history.push("/tabs");
 			}
-			
+
 		}
 	}
 
@@ -64,32 +67,39 @@ const Login: React.FC = () => {
 					<IonButton style={{ width: '100%' }} onClick={() => login('accountant', 'accountant')}>Accountant</IonButton>
 				</div> */}
 				<div className="single-item-container">
-					<IonImg src="../assets/logo4.svg" slot="" />
+					<IonImg src="../assets/Logo.png" style={{ width: '50%' }} />
 				</div>
-				<div className="single-item-container">
-					<IonText style={{ width: '100%', textAlign: 'center'}}><h4>Real Agro ERP</h4></IonText>
-				</div>
-				<div className="item-container">
-					<IonLabel>Username</IonLabel>
-					<StyledInput
-						value={username}
-						placeholder="Username"
+				<div className="field-container">
+					<div className="single-item-container">
+						<IonText style={{ width: '100%', textAlign: 'center' }} color="primary">Log Into Real Agro Cotton</IonText>
+					</div>
+					<div className="item-container">
+						<StyledInput
+							value={username}
+							placeholder="Username"
 
-						onIonChange={e => setUsername(e.detail.value || '')}
-					/>
-				</div>
-				<div className="item-container">
-					<IonLabel>Password</IonLabel>
-					<StyledInput
+							onIonChange={e => setUsername(e.detail.value || '')}
+						/>
+					</div>
+					<div className="item-container">
+						<StyledInput
 
-						value={password}
-						placeholder="Password"
-						type="password"
-						onIonChange={e => setPassword(e.detail.value || '')}
-					/>
+							value={password}
+							placeholder="Password"
+							type="password"
+							onIonChange={e => setPassword(e.detail.value || '')}
+						/>
+					</div>
+					<div className="single-item-container">
+						<StyledButton style={{ width: '100%' }} onClick={() => login()}>Login</StyledButton>
+					</div>
 				</div>
-				<div className="single-item-container">
-					<IonButton color="primary" style={{ width: '100%' }} onClick={() => login()}>Login</IonButton>
+				<div></div>
+				<div className="frappe-oauth-container">
+					<IonText color="primary">Sign in with</IonText>
+					<IonImg src="../assets/FrappeLogo.png" />
+
+					<div className="arrow-icon-container"><IonIcon icon={arrowForward} color="primary" class="arrow-icon" /></div>
 				</div>
 			</div>
 		</IonPage>
