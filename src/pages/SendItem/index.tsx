@@ -1,19 +1,16 @@
 import { useState } from 'react';
 import {
-	IonButton,
-	IonInput,
-	IonItem,
-	IonLabel,
-	IonList,
-	IonNote,
 	IonPage,
-	IonSegment,
-	IonSegmentButton
+	IonText
 } from "@ionic/react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { Dispatch, RootState } from "../../store";
 import "./sendItem.css";
+import "../Home.css";
+import "../Login/login.css";
+import StyledInput from '../../theme/components/Input';
+import StyledButton from '../../theme/components/Button';
 
 const SendItem: React.FC = () => {
 
@@ -33,10 +30,10 @@ const SendItem: React.FC = () => {
 	})
 
 	const proceed = () => {
-		
+
 		let emptyTruckWeightError: string | undefined = undefined;
 		let truckItemWeightError: string | undefined = undefined;
-		
+
 		let driverNameError: string | undefined = undefined;
 		let driverPhoneError: string | undefined = undefined;
 
@@ -77,66 +74,68 @@ const SendItem: React.FC = () => {
 			});
 			dispatch.stock.saveDraft();
 			history.push("/tabs");
-			
+
 		}
 	}
 
 	return (
 		<IonPage className="truck">
-			<IonList className="list">
-				<IonItem className={errors.emptyTruckWeightError ? 'ion-invalid' : ''}>
-					<IonLabel>Empty Truck Weight:</IonLabel>
-					<IonInput
-						type="number"
-						value={stocksState.draft.weight_car}
-						placeholder="Empty Truck Weight"
-						onIonChange={e => dispatch.stock.updateDraft({ weight_car: e.detail.value ? parseFloat(e.detail.value) : undefined })}
-					/>
-					<span slot="error">{errors.emptyTruckWeightError || ''}</span>
-				</IonItem>
-				<IonItem className={errors.truckItemWeightError ? 'ion-invalid' : ''}>
-					<IonLabel>Truck + Item Weight:</IonLabel>
-					<IonInput
-						type="number"
-						value={stocksState.draft.weight_car_item}
-						placeholder="Truck + Item Weight"
-						onIonChange={e => dispatch.stock.updateDraft({ weight_car_item: e.detail.value ? parseFloat(e.detail.value) : undefined })}
-					/>
-					<span slot="error">{errors.truckItemWeightError || ''}</span>
-				</IonItem>
-				<IonItem>
-					<IonLabel>Item Weight:</IonLabel>
-					<IonInput
-						value={(stocksState.draft.weight_car_item || 0) - (stocksState.draft.weight_car || 0)}
-						type="number"
-						placeholder="Autofill"
-						disabled
-					/>
-				</IonItem>
-				<IonItem className={errors.driverNameError ? 'ion-invalid' : ''}>
-					<IonLabel>{"Driver's name:"}</IonLabel>
-					<IonInput
-						value={stocksState.draft.driver_name}
-						placeholder="Driver's name"
-						onIonChange={e => dispatch.stock.updateDraft({ driver_name: e.detail.value ? e.detail.value : undefined })}
-					/>
-					<span slot="error">{errors.driverNameError || ''}</span>
-				</IonItem>
-				<IonItem className={errors.driverPhoneError ? 'ion-invalid' : ''}>
-					<IonLabel>{"Driver's phone:"}</IonLabel>
-					<IonInput
-						value={stocksState.draft.driver_phone}
-						placeholder="Driver's phone:"
-						onIonChange={e => dispatch.stock.updateDraft({ driver_phone: e.detail.value ? e.detail.value : undefined })}
-					/>
-					<span slot="error">{errors.driverPhoneError || ''}</span>
-				</IonItem>
-				<IonItem lines="none" style={{ marginTop: '24px'}}>
-					<IonButton style={{ width: '100%', height: '38px'}} onClick={() => proceed()}>
-						Save
-					</IonButton>
-				</IonItem>
-			</IonList>
+			<div className="heading-container">
+				<IonText color="primary" class="heading">Send Item</IonText>
+				<IonText color="primary" class="subtitle">Fill the form and save</IonText>
+			</div>
+			<div className="form-container" style={{ flex: 5, justifyContent: 'flex-start' }}>
+				<div className="field-container">
+					<div className="item-container">
+						<StyledInput
+							type="number"
+							value={stocksState.draft.weight_car}
+							placeholder="Empty Truck Weight"
+							onIonChange={e => dispatch.stock.updateDraft({ weight_car: e.detail.value ? parseFloat(e.detail.value) : undefined })}
+						/>
+						<span slot="error">{errors.emptyTruckWeightError || ''}</span>
+					</div>
+					<div className="item-container">
+						<StyledInput
+							type="number"
+							value={stocksState.draft.weight_car_item}
+							placeholder="Truck + Item Weight"
+							onIonChange={e => dispatch.stock.updateDraft({ weight_car_item: e.detail.value ? parseFloat(e.detail.value) : undefined })}
+						/>
+						<span slot="error">{errors.truckItemWeightError || ''}</span>
+					</div>
+					<div className="item-container">
+						<StyledInput
+							value={(stocksState.draft.weight_car_item || 0) - (stocksState.draft.weight_car || 0)}
+							type="number"
+							placeholder="Autofill"
+							disabled
+						/>
+					</div>
+					<div className="item-container">
+						<StyledInput
+							value={stocksState.draft.driver_name}
+							placeholder="Driver's name"
+							onIonChange={e => dispatch.stock.updateDraft({ driver_name: e.detail.value ? e.detail.value : undefined })}
+						/>
+						<span slot="error">{errors.driverNameError || ''}</span>
+					</div>
+					<div className="item-container">
+
+						<StyledInput
+							value={stocksState.draft.driver_phone}
+							placeholder="Driver's phone:"
+							onIonChange={e => dispatch.stock.updateDraft({ driver_phone: e.detail.value ? e.detail.value : undefined })}
+						/>
+						<span slot="error">{errors.driverPhoneError || ''}</span>
+					</div>
+					<div className="item-container">
+						<StyledButton style={{ width: '100%', height: '38px' }} onClick={() => proceed()}>
+							Save
+						</StyledButton>
+					</div>
+				</div>
+			</div>
 		</IonPage>
 	);
 };

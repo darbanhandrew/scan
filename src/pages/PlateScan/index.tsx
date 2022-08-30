@@ -1,12 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
-	IonButton,
-	IonCardContent,
-	IonContent,
-	IonGrid,
 	IonImg,
 	IonPage,
-	IonRow,
 	IonText,
 } from "@ionic/react";
 import "./PlateScan.css";
@@ -15,14 +10,14 @@ import Webcam from "react-webcam";
 import { ANRPManager } from "../../util/anrp.service";
 import { useHistory } from "react-router";
 import StyledButton from "../../theme/components/Button";
-import { image } from "ionicons/icons";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "../../store";
+
 
 const videoConstraints = {
 	width: 220,
 	height: 220,
-	facingMode: "user"
+	facingMode: "environment"
 };
 
 
@@ -35,9 +30,14 @@ const ReadPlate: React.FC = () => {
 	const inputFile = useRef<HTMLInputElement>(null);
 	const history = useHistory();
 
-	function dataURLtoFile(dataurl: string, filename: string) {
+	useEffect(() => {
 
-		let arr = dataurl.split(',');
+		dispatch.purchaseReceipts.removeDraft();
+	}, []);
+
+	function dataURLtoFile(data_url: string, filename: string) {
+
+		let arr = data_url.split(',');
 		let m = arr[0].match(/:(.*?);/);
 		if (m && m[1]) {
 			let mime = m[1];
@@ -59,19 +59,14 @@ const ReadPlate: React.FC = () => {
 
 	const upload = async () => {
 
-		console.log('imgPreview', imgPreview);
-
-
-
 		if (imgPreview === '') {
-			console.log('input file', inputFile, inputFile.current);
 			inputFile.current!.click();
 
 		} else {
 
 			const f = dataURLtoFile(imgPreview, 'plate.jpg');
 			try {
-				console.log('f', f);
+	
 				if (f) {
 					const resp = await ANRPManager.detectPlate(f);
 					console.log('Response received:', resp);
@@ -102,14 +97,13 @@ const ReadPlate: React.FC = () => {
 
 	const proceed = () => {
 
-		dispatch.purchaseReceipts.updateDraft({ INN: plate })
-
+		dispatch.purchaseReceipts.updateDraft({ lr_no: plate })
 		history.push('/tabs/stock/check-in')
 	}
 
 
 	return (
-		<IonPage class="plate-scan-page">
+		<IonPage className="plate-scan-page">
 			<div className="heading-container"><IonText color="primary" class="heading">Home</IonText><IonText color="primary" class="subtitle">Scan the plate
 				number</IonText></div>
 			<div className="plate-scan-container">
@@ -147,7 +141,18 @@ const ReadPlate: React.FC = () => {
 						reader.readAsDataURL(e.target.files[0]);
 					}
 				}} />
-				{plate !== '' && (<IonText className="upButton" style={{ textAlign: 'center', marginBottom: '12px' }}>{plate}</IonText>)}
+				{plate !== '' && (
+					<div className="plate-scan-result-container">
+						<div className="plate-2"><IonText style={{ textAlign: 'center' }}>{plate.slice(0,2)}</IonText></div>
+						<div className="plate-rest">
+							<IonText style={{ textAlign: 'center' }}>{plate.slice(2)}</IonText>
+							<div className="plate-country">
+								<IonImg src="../assets/uzbekistan-flag-icon1.png" />
+								<IonText style={{ textAlign: 'center' }}>UZ</IonText>
+							</div>
+						</div>
+					</div>
+				)}
 				<StyledButton onClick={() => plate !== '' ? proceed() : upload()} style={{ width: '100%', padding: '0px 2rem' }}>{plate !== '' ? 'Confirm' : 'Upload'}</StyledButton>
 			</div>
 		</IonPage>

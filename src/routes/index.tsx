@@ -23,9 +23,9 @@ const Routes = () => {
 					<Route exact path="/login">
 						<Login />
 					</Route>
-					{/* <Route exact path="*">
+					<Route exact path="/">
 						<Redirect to="/login" />
-					</Route> */}
+					</Route>
 				</IonRouterOutlet>
 
 				{/* <Route render={() => authContext.auth.userType === null ? <Redirect to="/login" /> : <Redirect to={`/${authContext.auth.prefix || 'stock'}/home`} />} /> */}

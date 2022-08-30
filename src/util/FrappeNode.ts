@@ -187,62 +187,62 @@ export const FrappeRequestManager = {
 	? 	const resp = await axios.post('http://realagroerp.uz/api/method/frappe.auth.get_logged_user', { 'Authorization': 'token 9ede50b2450c6de:43c8661f5567f8d' })
 	 }, */
 
-	listDocuments: async (doctype: string) => {
+	listDocuments: async (doctype: string, fields: string[], filters: string[][], limit_start?: number, limit_page_length?: number) => {
 
 		try {
-			const resp = await ConfiguredAxios.get(`/resource/${doctype}`);
+			const resp = await ConfiguredAxios.get(`/resource/${doctype}`, {
+				params: {
+					...(fields.length > 0 && {
+						fields: `["${fields.join('","')}"]`
+					}),
+					...(filters.length > 0 && { filters: JSON.stringify(filters) }),
+					limit_start,
+					limit_page_length,
+				}
+			});
 			console.log('success', resp);
+			return resp;
 		} catch (err) {
 
-			console.log(err);
+			throw err;
 		}
 	},
 	getDocument: async (doctype: string, id: string) => {
 		try {
 			const resp = await ConfiguredAxios.get(`/resource/${doctype}/${id}`);
 			console.log('success', resp);
+			return resp;
 		} catch (err) {
 
-			console.log(err);
+			throw err;
 		}
 	},
 	addDocument: async (doctype: string, data: Record<string, any>) => {
 		try {
-			const options = {
-				headers: {
-					'Content-Type': 'application/x-www-form-urlencoded',
-				},
-			};
-			const form = new URLSearchParams();
-			for (const key in data) {
-				if (Object.prototype.hasOwnProperty.call(data, key)) {
-					const element = data[key];
-					form.append(key, element);
-				}
-			}
-			const resp = await ConfiguredAxios.post(`/resource/${doctype}`, form, options);
-			console.log('success', resp);
+
+			const resp = await ConfiguredAxios.post(`/resource/${doctype}`, data);
+			console.log('add document success', doctype, resp);
 		} catch (err) {
 
-			console.log(err);
+			throw err;
 		}
 	},
-	editDocument: async (doctype: string, id: string, data: Record<string, any>) => {
+	editDocument: async (doctype: string, id: number, data: Record<string, any>) => {
 		try {
 			const resp = await ConfiguredAxios.put(`/resource/${doctype}/${id}`, data);
 			console.log('success', resp);
 		} catch (err) {
 
-			console.log(err);
+			throw err;
 		}
 	},
-	removeDocument: async (doctype: string, id: string) => {
+	removeDocument: async (doctype: string, id: number) => {
 		try {
 			const resp = await ConfiguredAxios.delete(`/resource/${doctype}/${id}`);
 			console.log('success', resp);
 		} catch (err) {
 
-			console.log(err);
+			throw err;
 		}
 	}
 };

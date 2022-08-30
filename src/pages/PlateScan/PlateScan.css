@@ -9,8 +9,8 @@
 
 .plate-scan-container {
 	flex: 5;
-    height: 100%;
-    padding: 2rem;
+	height: 100%;
+	padding: 2rem;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
@@ -32,6 +32,47 @@
 .upButton {
 	height: 42px;
 	width: 100%;
+}
+
+.plate-scan-result-container {
+	width: calc(100% - 4rem);
+	height: 48px;
+	/* White */
+	background: #FFFFFF;
+	border: 1px solid #5A55CA;
+	border-radius: 14px;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.plate-2 {
+	width: 20%;
+	height: 100%;
+	border-right: 1px solid #5A55CA;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.plate-rest {
+	width: 80%;
+	height: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0 1rem;
+}
+.plate-country {
+	width: 34px;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 
 /* screen width is less than 420 */

@@ -1,0 +1,99 @@
+{
+	"accountant": [
+		{
+			"title": "Sales Invoices",
+			"link": "https://realagroerp.uz/app/sales-invoice",
+			"icon": "../assets/HomeIcons/Accountant/Invoices.svg"
+		},
+		{
+			"title": "Purchase Invoices",
+			"link": "https://realagroerp.uz/app/purchase-invoice",
+			"icon": "../assets/HomeIcons/Accountant/Invoices.svg"
+		},
+		{
+			"title": "General Ledger",
+			"link": "https://realagroerp.uz/app/query-report/General%20Ledger?company=Real%20Agro%20Cotton&from_date=2022-07-30&to_date=2022-08-30&group_by=Group%20by%20Voucher%20(Consolidated)&include_dimensions=1",
+			"icon": "../assets/HomeIcons/Accountant/GeneralLedger.svg"
+		},
+		{
+			"title": "Payment Entry",
+			"link": "https://realagroerp.uz/app/payment-entry",
+			"icon": "../assets/HomeIcons/Accountant/PaymentEntry.svg"
+		},
+		{
+			"title": "Contracts",
+			"link": "https://realagroerp.uz/app/contract",
+			"icon": "../assets/HomeIcons/Accountant/Contracts.svg"
+		},
+		{
+			"title": "Profit and Loss",
+			"link": "https://realagroerp.uz/app/query-report/Profit%20and%20Loss%20Statement",
+			"icon": "../assets/HomeIcons/Accountant/ProfitAndLoss.svg"
+		},
+		{
+			"title": "Balance Sheet",
+			"link": "https://realagroerp.uz/app/query-report/Balance%20Sheet?company=Real%20Agro%20Cotton&filter_based_on=Fiscal%20Year&period_start_date=2022-01-01&period_end_date=2022-12-31&from_fiscal_year=2022&to_fiscal_year=2022&periodicity=Yearly&accumulated_values=1&include_default_book_entries=1",
+			"icon": "../assets/HomeIcons/Accountant/BalanceSheet.svg"
+		},
+		{
+			"title": "Stock Ledger",
+			"link": "https://realagroerp.uz/app/query-report/Stock%20Ledger?company=Real%20Agro%20Cotton&from_date=2022-07-30&to_date=2022-08-30",
+			"icon": "../assets/HomeIcons/Accountant/StockLedger.svg"
+		},
+		{
+			"title": "Journal Entry",
+			"link": "https://realagroerp.uz/app/journal-entry",
+			"icon": "../assets/HomeIcons/Accountant/JournalEntry.svg"
+		},
+		{
+			"title": "Loans",
+			"link": "https://realagroerp.uz/app/loan",
+			"icon": "../assets/HomeIcons/Accountant/Loans.svg"
+		},
+		{
+			"title": "Payroll",
+			"link": "https://realagroerp.uz/app/payroll-entry",
+			"icon": "../assets/HomeIcons/Accountant/Payroll.svg"
+		},
+		{
+			"title": "Employee",
+			"link": "https://realagroerp.uz/app/employee?status=Active",
+			"icon": "../assets/HomeIcons/Accountant/Employee.svg"
+		},
+		{
+			"title": "New Department",
+			"link": "https://realagroerp.uz/app/department/new-department-1",
+			"icon": "../assets/HomeIcons/Accountant/NewDepartment.svg"
+		},
+		{
+			"title": "Customers",
+			"link": "https://realagroerp.uz/app/customer",
+			"icon": "../assets/HomeIcons/Accountant/Customers.svg"
+		},
+		{
+			"title": "Supplier",
+			"link": "https://realagroerp.uz/app/supplier",
+			"icon": "../assets/HomeIcons/Accountant/Supplier.svg"
+		},
+		{
+			"title": "Item",
+			"link": "https://realagroerp.uz/app/item",
+			"icon": "../assets/HomeIcons/Accountant/Item.svg"
+		},
+		{
+			"title": "Assets",
+			"link": "https://realagroerp.uz/app/asset",
+			"icon": "../assets/HomeIcons/Accountant/Assets.svg"
+		},
+		{
+			"title": "Request Overtime or Leave",
+			"link": "https://realagroerp.uz/app/shift-request",
+			"icon": "../assets/HomeIcons/Accountant/RequestOvertimeOrLeave.svg"
+		},
+		{
+			"title": "My Salary",
+			"link": "https://realagroerp.uz/app/salary-slip",
+			"icon": "../assets/HomeIcons/Accountant/MySalary.svg"
+		}
+	]
+}

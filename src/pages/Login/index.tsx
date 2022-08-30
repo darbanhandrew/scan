@@ -27,15 +27,13 @@ const Login: React.FC = () => {
 	const authContext = useContext(AuthContext);
 
 
-	// const login = (user: string, prefix: string) => {
+	const login = async (user: string, prefix: string) => {
 
-	// 	authContext.auth.login(user, prefix);
+	
 	// 	history.push("/tabs");
 	// }
 
-	const login = async () => {
-
-		await FrappeRequestManager.listDocuments('Account');
+	// const login = async () => {
 
 		if (username !== "" && username !== undefined && password !== "" && password !== undefined) {
 
@@ -44,28 +42,18 @@ const Login: React.FC = () => {
 			const resp = await new FrappeClient().authenticate(username, password)
 			console.log(resp);
 			if (resp?.data.full_name) {
-				authContext.auth.login('stock-manager', 'stock');
+				authContext.auth.login(user, prefix);
+				// authContext.auth.login('stock-manager', 'stock');
+				// authContext.auth.login('accountant', 'accountant');
 				history.push("/tabs");
 			}
 
 		}
-	}
+	};
 
 	return (
 		<IonPage className="container">
 			<div className="form-container">
-				{/* <div>
-					<IonText style={{ width: '100%', textAlign: 'center' }}>Which user you want to login as?</IonText>
-				</div>
-				<div>
-					<IonButton color="warning" style={{ width: '100%' }} onClick={() => login('stock-manager', 'stock')}>Warehouse Manager</IonButton>
-				</div>
-				<div>
-					<IonButton color="secondary" style={{ width: '100%' }} onClick={() => login('lab-manager', 'lab')}>Lab Manager</IonButton>
-				</div>
-				<div>
-					<IonButton style={{ width: '100%' }} onClick={() => login('accountant', 'accountant')}>Accountant</IonButton>
-				</div> */}
 				<div className="single-item-container">
 					<IonImg src="../assets/Logo.png" style={{ width: '50%' }} />
 				</div>
@@ -91,7 +79,13 @@ const Login: React.FC = () => {
 						/>
 					</div>
 					<div className="single-item-container">
-						<StyledButton style={{ width: '100%' }} onClick={() => login()}>Login</StyledButton>
+						<StyledButton style={{ width: '100%' }} onClick={() => login('stock-manager', 'stock')}>Login As Stock Manager</StyledButton>
+					</div>
+					<div className="single-item-container">
+						<StyledButton style={{ width: '100%' }} onClick={() => login('accountant', 'accountant')}>Login As Accountant</StyledButton>
+					</div>
+					<div className="single-item-container">
+						<StyledButton style={{ width: '100%' }} onClick={() => login('lab-manager', 'lab')}>Login As Lab Manager</StyledButton>
 					</div>
 				</div>
 				<div></div>
