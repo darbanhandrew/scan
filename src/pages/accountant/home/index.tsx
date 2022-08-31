@@ -11,8 +11,11 @@ import {
 } from "@ionic/react";
 import "./Home.css";
 import HomeInfo from "../../../assets/Home.json"; 
+import { useIntl } from "react-intl";
 
 const Home: React.FC = () => {
+
+	const intl = useIntl();
 
 	const createColumn = (title: string, icon: string, link: string) => {
 		
@@ -22,7 +25,7 @@ const Home: React.FC = () => {
 					<IonCardContent class="ion-card-content">
 						<IonImg className="image-container" src={icon} />
 						<IonText color="primary" class="item-text">
-							{title}
+							{intl.formatMessage({ id: title, defaultMessage: title })}
 						</IonText>
 					</IonCardContent>
 				</IonCard>
@@ -56,6 +59,7 @@ const Home: React.FC = () => {
 
 	return (
 		<IonPage className="homePage">
+			<div className="heading-container"><IonText color="primary" class="heading">{intl.formatMessage({ id: 'Home', defaultMessage: 'Home' })}</IonText></div>
 			<IonGrid className="grid-container">
 				{createRows()}
 			</IonGrid>

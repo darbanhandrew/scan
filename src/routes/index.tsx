@@ -1,5 +1,5 @@
-import { IonContent, IonRouterOutlet } from "@ionic/react";
-import { useContext } from "react";
+import { IonContent, IonFab, IonFabButton, IonFabList, IonIcon, IonRouterOutlet } from "@ionic/react";
+import { useContext, useState } from "react";
 import { Redirect, Route } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import Login from "../pages/Login";
@@ -7,14 +7,55 @@ import { IonReactRouter } from "@ionic/react-router";
 // import Menu from "../components/menu";
 import TabBar from "../components/tab-bar";
 import ReadPlate from "../pages/PlateScan";
+import { languageOutline, logoVimeo } from "ionicons/icons";
+import useConfig from "../hooks/useConfig";
 
 
 const Routes = () => {
 
 	const authContext = useContext(AuthContext);
+	const { locale, onChangeLocale, onChangeLocaleAndRTL } = useConfig();
+	const [language, setLanguage] = useState<string>(locale);
+
+	const changeLocale = (locale: string) => {
+		onChangeLocale(locale);
+		setLanguage(locale);
+		console.log(locale);
+	};
 
 	return (
 		<IonContent>
+			<IonFab vertical="top" horizontal="end" slot="fixed">
+				<IonFabButton>
+					<IonIcon icon={languageOutline} />
+				</IonFabButton>
+				<IonFabList>
+					<IonFabButton
+						{...(language === 'en' && { color: 'primary' })}
+						onClick={() => changeLocale('en')}
+					>
+						En
+					</IonFabButton>
+					<IonFabButton
+						{...(language === 'ru' && { color: 'primary' })}
+						onClick={() => changeLocale('ru')}
+					>
+						Ru
+					</IonFabButton>
+					<IonFabButton
+						{...(language === 'uz-Latn-UZ' && { color: 'primary' })}
+						onClick={() => changeLocale('uz-Latn-UZ')}
+					>
+						Uzb
+					</IonFabButton>
+					<IonFabButton
+						{...(language === 'uz-Cyrl-UZ' && { color: 'primary' })}
+						onClick={() => changeLocale('uz-Cyrl-UZ')}
+					>
+						Узб
+					</IonFabButton>
+				</IonFabList>
+			</IonFab>
 			<IonReactRouter>
 				{/* <Menu /> */}
 				<IonRouterOutlet id="main">

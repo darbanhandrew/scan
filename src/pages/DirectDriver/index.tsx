@@ -5,11 +5,7 @@ import {
 	IonItem,
 	IonLabel,
 	IonList,
-	IonNote,
-	IonPage,
-	IonSegment,
-	IonSegmentButton
-} from "@ionic/react";
+	IonPage} from "@ionic/react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
 import { Dispatch, RootState } from "../../store";

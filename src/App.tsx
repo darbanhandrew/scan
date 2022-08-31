@@ -1,17 +1,7 @@
 import {
 	IonApp,
-	IonHeader,
-	IonIcon,
-	IonLabel,
-	IonTitle,
-	IonToolbar,
-	setupIonicReact,
-	IonToggle,
-	IonItem,
-	IonMenuButton,
-	IonButtons
+	setupIonicReact
 } from "@ionic/react";
-import { IonReactRouter } from "@ionic/react-router";
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
 
@@ -32,9 +22,10 @@ import { store } from "./store";
 
 /* Theme variables */
 import "./theme/variables.css";
-import { moon } from "ionicons/icons";
 import { AuthProvider } from "./context/AuthContext";
 import Routes from "./routes";
+import Locales from "./util/Locale";
+import { ConfigProvider } from "./context/ConfigContext";
 // import Menu from "./components/menu";
 setupIonicReact();
 
@@ -42,12 +33,15 @@ const App: React.FC = () => {
 
 	return (
 		<Provider store={store}>
-			<AuthProvider>
-				<IonApp>
-					<Routes />
-
-				</IonApp>
-			</AuthProvider >
+			<ConfigProvider>
+				<Locales>
+					<AuthProvider>
+						<IonApp>
+							<Routes />
+						</IonApp>
+					</AuthProvider >
+				</Locales>
+			</ConfigProvider>
 		</Provider>
 	)
 };

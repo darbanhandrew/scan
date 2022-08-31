@@ -16,12 +16,14 @@ import FrappeClient, { FrappeRequestManager } from '../../util/FrappeNode';
 import StyledInput from "../../theme/components/Input";
 import StyledButton from "../../theme/components/Button";
 import { arrowForward } from "ionicons/icons";
+import { useIntl } from "react-intl";
 // import AxiosClient from '../../config/AxiosConfig';
 
 const Login: React.FC = () => {
 
 	const [username, setUsername] = useState<string>();
 	const [password, setPassword] = useState<string>();
+	const intl = useIntl();
 
 	const history = useHistory();
 	const authContext = useContext(AuthContext);
@@ -29,11 +31,11 @@ const Login: React.FC = () => {
 
 	const login = async (user: string, prefix: string) => {
 
-	
-	// 	history.push("/tabs");
-	// }
 
-	// const login = async () => {
+		// 	history.push("/tabs");
+		// }
+
+		// const login = async () => {
 
 		if (username !== "" && username !== undefined && password !== "" && password !== undefined) {
 
@@ -59,12 +61,12 @@ const Login: React.FC = () => {
 				</div>
 				<div className="field-container">
 					<div className="single-item-container">
-						<IonText style={{ width: '100%', textAlign: 'center' }} color="primary">Log Into Real Agro Cotton</IonText>
+						<IonText style={{ width: '100%', textAlign: 'center' }} color="primary">{intl.formatMessage({ id: "Log Into Real Agro Cotton", defaultMessage: "Log Into Real Agro Cotton" })}</IonText>
 					</div>
 					<div className="item-container">
 						<StyledInput
 							value={username}
-							placeholder="Username"
+							placeholder={intl.formatMessage({ id: "Username", defaultMessage: "Username" })}
 
 							onIonChange={e => setUsername(e.detail.value || '')}
 						/>
@@ -73,19 +75,25 @@ const Login: React.FC = () => {
 						<StyledInput
 
 							value={password}
-							placeholder="Password"
+							placeholder={intl.formatMessage({ id: "Password", defaultMessage: "Password" })}
 							type="password"
 							onIonChange={e => setPassword(e.detail.value || '')}
 						/>
 					</div>
 					<div className="single-item-container">
-						<StyledButton style={{ width: '100%' }} onClick={() => login('stock-manager', 'stock')}>Login As Stock Manager</StyledButton>
+						<StyledButton style={{ width: '100%' }} onClick={() => login('stock-manager', 'stock')}>
+							{intl.formatMessage({ id: "Login", defaultMessage: "Login" })} As Stock Manager
+						</StyledButton>
 					</div>
 					<div className="single-item-container">
-						<StyledButton style={{ width: '100%' }} onClick={() => login('accountant', 'accountant')}>Login As Accountant</StyledButton>
+						<StyledButton style={{ width: '100%' }} onClick={() => login('accountant', 'accountant')}>
+							{intl.formatMessage({ id: "Login", defaultMessage: "Login" })} As Accountant
+						</StyledButton>
 					</div>
 					<div className="single-item-container">
-						<StyledButton style={{ width: '100%' }} onClick={() => login('lab-manager', 'lab')}>Login As Lab Manager</StyledButton>
+						<StyledButton style={{ width: '100%' }} onClick={() => login('lab-manager', 'lab')}>
+							{intl.formatMessage({ id: "Login", defaultMessage: "Login" })} As Lab Manager
+						</StyledButton>
 					</div>
 				</div>
 				<div></div>
