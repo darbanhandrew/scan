@@ -86,6 +86,7 @@ export interface PurchaseReceipt {
 	shipping_address?: null;
 	shipping_rule?: null;
 	status?: 'Draft' | 'To Bill' | 'Completed' | 'Return Issued' | 'Cancelled' | 'Closed';
+	step: 'Check-in' | 'Unloading' | 'Undefined' | 'Check-out';
 	supplied_items?: any[];
 	supplier_address?: null;
 	supplier_delivery_note?: null;
@@ -110,4 +111,5 @@ export interface PurchaseReceipt {
 	total?: number;
 	transporter_name?: null;
 	workflow_state?: string;
+	bonnet?: string;
 }

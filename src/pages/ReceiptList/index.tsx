@@ -1,25 +1,55 @@
 import { useEffect, useState } from 'react';
 import {
-	IonButton,
-	IonChip,
 	IonContent,
+	IonImg,
 	IonInfiniteScroll,
 	IonInfiniteScrollContent,
-	IonItem,
-	IonLabel,
 	IonList,
 	IonPage,
-	IonSegment,
-	IonSegmentButton,
+	IonText,
 	useIonViewWillEnter
 } from "@ionic/react";
 import "./receiptList.css";
 
-import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { Dispatch, RootState } from "../../store";
 import { PurchaseReceipt } from '../../types/PurchaseReceipt.type';
 import { FrappeRequestManager } from '../../util/FrappeNode';
+
+import NewStatusIcon from '../../assets/icons/NewStatusIcon.svg';
+import ProcessingStatusIcon from '../../assets/icons/ProcessingStatusIcon.svg';
+import CanceledStatusIcon from '../../assets/icons/CanceledStatusIcon.svg';
+import DoneStatusIcon from '../../assets/icons/DoneStatusIcon.svg';
+import { useIntl } from 'react-intl';
+
+// handle different purchase receipt statuses
+// step ?: 'Draft' | 'Check-in' | 'Unloading' | 'To Bill' | 'Completed' | 'Return Issued' | 'Cancelled' | 'Closed';
+const statusMap = {
+	"Check-in": {
+		color: "#ECFFF1",
+		text: "Check In",
+		icon: NewStatusIcon,
+		link: (docname: string) => { return `/tabs/receipt/${docname}`; }
+	},
+	"Unloading": {
+		color: "#9692DD",
+		text: "Unloading",
+		icon: ProcessingStatusIcon,
+		link: (docname: string) => { return `/tabs/check-out/${docname}`; }
+	},
+	"Check-out": {
+		color: "#ADADAD",
+		text: "Completed",
+		icon: DoneStatusIcon,
+		link: (docname: string) => { return "/tabs/list"; }
+	},
+	"Undefined": {
+		color: "#F8E9EA",
+		text: "Closed",
+		icon: CanceledStatusIcon,
+		link: (docname: string) => { return "/tabs/list"; }
+	}
+};
+
 
 const ReceiptList: React.FC = () => {
 
@@ -27,74 +57,90 @@ const ReceiptList: React.FC = () => {
 	// const stocksState = useSelector((state: RootState) => state.stock);
 	// const [selectedSegment, setSelectedSegment] = useState<string>('receipts');
 	const history = useHistory();
-
+	const intl = useIntl();
 	const [receipts, setReceipts] = useState<PurchaseReceipt[]>([]);
-	// const 
+	const [loading, setLoading] = useState<boolean>(false);
 
 
 	useEffect(() => {
 
+		setLoading(true);
+		console.log('loading!')
 	}, []);
-
-
-
-	const pushData = (newData: PurchaseReceipt[]) => {
-		
-		setReceipts([
-			...receipts,
-			...newData
-		]);
-	};
 
 	const loadData = async (ev?: any) => {
 
 		try {
-			const resp = await FrappeRequestManager.listDocuments('Purchase Receipt', ["*"], [], receipts.length);
+			const resp = await FrappeRequestManager.listDocuments('Purchase Receipt', ["step", "supplier", "creation", "name"], [], receipts.length);
 
 			setReceipts([
 				...receipts,
 				...resp.data.data,
 			]);
-
+			setLoading(false);
 			ev?.target.complete();
 		} catch (err) {
 			console.log(err);
 		}
-	}
+	};
+
+
+	const convertTime = (pr: PurchaseReceipt) => {
+
+		if (pr.creation) {
+			const timeString = (pr.creation + 'Z').replace(/-/g, '/').replaceAll(' ', 'T').replaceAll('/', '-');
+			const date = new Date(timeString) || new Date();
+			// if date was valid
+			if (date.toString() !== 'Invalid Date') {
+
+				const result = Intl.DateTimeFormat('uz-UZ', { year: 'numeric', month: 'narrow', day: '2-digit', hour: '2-digit', minute: '2-digit' }).format(date);
+
+				return result;
+			}
+
+			return 'Invalid Date';
+		}
+
+		return 'err';
+	};
+
+
+
 
 	useIonViewWillEnter(() => {
 		loadData();
 	});
 
+	if (loading) {
+		return (
+			<IonPage>
+				<IonContent>
+					Loading...
+				</IonContent>
+			</IonPage>
+		);
+	}
+
 	return (
 		<IonPage className="receiptList">
 			<IonContent className="list">
-				<IonList>
+				<IonList >
 					{receipts.map((item, index) => {
 						return (
-							<IonItem key={index} onClick={() => history.push(item.status === 'To Bill'
-								? `/tabs/receipt/${index}`
-								: item.status === 'Completed'
-									? `/tabs/check-out/${index}`
-									: '/tabs/list')}>
-								<IonChip
-									color={
-										item.status === 'To Bill'
-											? 'primary'
-											: item.status === 'Completed'
-												? 'success'
-												: item.status === 'Return Issued'
-													? 'danger'
-													: item.status === 'Draft'
-														? 'tertiary' : item.status === 'Cancelled' ? 'danger' : 'warning'
-									}
-								>
-									{item.status || 'Unknown'}
-								</IonChip>
-								<IonLabel>
-									{item.supplier || ''} {/* {Intl.DateTimeFormat('uz-UZ', { year: 'numeric', month: 'narrow', day: '2-digit', hour: '2-digit', minute: '2-digit' }).format(item.posting_date !== undefined && item.posting_time !== undefined ? new Date(`${item.posting_date}T${item.posting_time}`) : new Date())} */}
-								</IonLabel>
-							</IonItem>
+
+							<div className="item-c" key={index} onClick={() => history.push(item.step && item.name ? statusMap[item.step].link(item.name) : '/tabs/list')} >
+								<div className="chip" style={{ background: statusMap[item.step || 'Undefined'].color }}>
+									<IonImg src={statusMap[item.step || 'Undefined'].icon} />
+								</div>
+								<IonText>
+									{item.step}
+									{' '}
+									{item.supplier || ''}
+									{' '}
+									{convertTime(item)}
+								</IonText>
+							</div>
+
 						)
 					})}
 				</IonList>

@@ -31,10 +31,8 @@ const TabBar: React.FC = () => {
 				<Route exact path="/tabs/stock/home" render={(props) => authContext.auth.userType === 'stock-manager' ? <Home /> : <Redirect to="/login" />} />
 				<Route exact path="/tabs/stock/read-plate" render={(props) => authContext.auth.userType === 'stock-manager' ? <ReadPlate /> : <Redirect to="/login" />} />
 				<Route exact path="/tabs/stock/check-in" render={(props) => authContext.auth.userType === 'stock-manager' ? <Truck /> : <Redirect to="/login" />} />
-				<Route exact path="/tabs/receipt/:index" render={(props) => {
-					console.log(authContext.auth.userType === 'stock-manager', authContext.auth.userType)
-					return authContext.auth.userType === 'stock-manager' ? <Receipt /> : <Redirect to="/login" />}} />
-				<Route exact path="/tabs/check-out/:index" render={(props) => authContext.auth.userType === 'stock-manager' ? <CheckOut /> : <Redirect to="/login" />} />
+				<Route exact path="/tabs/receipt/:docname" render={(props) => authContext.auth.userType === 'stock-manager' ? <Receipt /> : <Redirect to="/login" />} />
+				<Route exact path="/tabs/check-out/:docname" render={(props) => authContext.auth.userType === 'stock-manager' ? <CheckOut /> : <Redirect to="/login" />} />
 
 
 				<Route exact path="/tabs/send-item" render={(props) => authContext.auth.userType === 'stock-manager' ? <SendItem /> : <Redirect to="/login" />} />

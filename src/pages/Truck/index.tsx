@@ -15,14 +15,15 @@ import StyledButton from '../../theme/components/Button';
 import { FrappeRequestManager } from '../../util/FrappeNode';
 import StyledAutocomplete from '../../theme/components/Autocomplete';
 import { GroupBase, OptionsOrGroups, StylesConfig } from 'react-select';
+import { PurchaseReceipt } from '../../types/PurchaseReceipt.type';
+import { useIntl } from 'react-intl';
 
 const Truck: React.FC = () => {
 
 	const dispatch = useDispatch<Dispatch>();
 	const purchaseReceiptsState = useSelector((state: RootState) => state.purchaseReceipts);
 	const history = useHistory();
-
-	const [autocompleteFilter, setAutocompleteFilter] = useState('');
+	const intl = useIntl();
 
 	const [errors, setError] = useState<{
 		supplierError: string | undefined;
@@ -65,7 +66,7 @@ const Truck: React.FC = () => {
 				options: [],
 				hasMore: false,
 			}
-			
+
 		}
 	};
 
@@ -129,7 +130,7 @@ const Truck: React.FC = () => {
 		};
 
 		setError(errs);
-		
+
 		console.log('pr', purchaseReceiptsState.draft);
 
 		if (purchaseReceiptsState.draft?.supplier && purchaseReceiptsState.draft?.truck_weight/*  && purchaseReceiptsState.draft.harvestMethod */) {
@@ -147,11 +148,12 @@ const Truck: React.FC = () => {
 		// guard check draft not to be null
 
 		if (purchaseReceiptsState.draft) {
-			const submitForm = {
+			const submitForm: PurchaseReceipt = {
 				lr_no: purchaseReceiptsState.draft.lr_no,
 				total_weight: purchaseReceiptsState.draft.truck_weight,
 				supplier: purchaseReceiptsState.draft.supplier,
 				items: purchaseReceiptsState.draft.items,
+				step: 'Check-in'
 			};
 
 			try {
@@ -164,24 +166,28 @@ const Truck: React.FC = () => {
 				console.error(err);
 			}
 		}
-		
+
 	};
 
-	const customStyles: StylesConfig = {
+	// const customStyles: StylesConfig = {
 
-		container: () => ({
-			// none of react-select's styles are passed to <Control />
-			width: '100%',
-			zIndex: 1000,
-		}),
-	}
+	// 	container: () => ({
+	// 		// none of react-select's styles are passed to <Control />
+	// 		width: '100%',
+	// 		zIndex: 1000,
+	// 	}),
+	// }
 
 	return (
 		<IonPage className="truck">
 
 			<div className="heading-container">
-				<IonText color="primary" class="heading">Receive Item</IonText>
-				<IonText color="primary" class="subtitle">Fill the form and save</IonText>
+				<IonText color="primary" class="heading">
+					{intl.formatMessage({ id: "Receive Item", defaultMessage: "Receive Item" })}
+				</IonText>
+				<IonText color="primary" class="subtitle">
+					{intl.formatMessage({ id: "Fill the form and save", defaultMessage: "Fill the form and save" })}
+				</IonText>
 			</div>
 			<div className="form-container" style={{ flex: 5, justifyContent: 'flex-start' }}>
 				<div className="field-container">
@@ -191,7 +197,7 @@ const Truck: React.FC = () => {
 							// <{ name: string }>
 							// styles={customStyles}
 							// styles={{}}
-							placeholder="Select Supplier"
+							placeholder={intl.formatMessage({ id: "Select Supplier", defaultMessage: "Select Supplier" })}
 							value={purchaseReceiptsState.draft?.supplier ? { value: purchaseReceiptsState.draft?.supplier, label: purchaseReceiptsState.draft?.supplier } : undefined}
 							loadOptions={(inputValue, loadedOptions) => loadSuppliers(inputValue, loadedOptions)}
 							onChange={(newValue, actionMeta) => {
@@ -215,7 +221,7 @@ const Truck: React.FC = () => {
 					<div className="item-container">
 						<StyledInput
 							value={purchaseReceiptsState.draft?.lr_no}
-							placeholder="INN"
+							placeholder={intl.formatMessage({ id: "INN", defaultMessage: "INN" })}
 							disabled
 						/>
 						<span slot="error">{errors.INNError || ''}</span>
@@ -224,7 +230,7 @@ const Truck: React.FC = () => {
 						<StyledInput
 							type="number"
 							value={purchaseReceiptsState.draft?.truck_weight}
-							placeholder="Truck Weight"
+							placeholder={intl.formatMessage({ id: "Truck Weight", defaultMessage: "Truck Weight" })}
 							onIonChange={e => dispatch.purchaseReceipts.updateDraft({ truck_weight: e.detail.value ? parseFloat(e.detail.value) : undefined })}
 						/>
 						<span slot="error">{errors.weightError || ''}</span>
@@ -249,7 +255,7 @@ const Truck: React.FC = () => {
 						<StyledAutocomplete
 							// <{ name: string }>
 							// styles={customStyles}
-							placeholder="Select Item"
+							placeholder={intl.formatMessage({ id: "Select Item", defaultMessage: "Select Item" })}
 							value={(purchaseReceiptsState.draft?.items?.length || 0) > 0 ? { value: purchaseReceiptsState.draft?.items![0].item_code, label: purchaseReceiptsState.draft?.items![0].item_code } : undefined}
 							loadOptions={(inputValue, loadedOptions) => loadItems(inputValue, loadedOptions)}
 							onChange={(newValue, actionMeta) => {
@@ -271,7 +277,9 @@ const Truck: React.FC = () => {
 						<span slot="error">{errors.supplierError || ''}</span>
 					</div>
 					<div className="single-item-container">
-						<StyledButton style={{ width: '100%' }} onClick={() => proceed()}>Save</StyledButton>
+						<StyledButton style={{ width: '100%' }} onClick={() => proceed()}>
+							{intl.formatMessage({ id: "Save", defaultMessage: "Save" })}
+						</StyledButton>
 					</div>
 				</div>
 

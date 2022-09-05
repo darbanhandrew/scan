@@ -12,6 +12,7 @@ import { useHistory } from "react-router";
 import StyledButton from "../../theme/components/Button";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "../../store";
+import { useIntl } from "react-intl";
 
 
 const videoConstraints = {
@@ -24,7 +25,7 @@ const videoConstraints = {
 const ReadPlate: React.FC = () => {
 
 	const dispatch = useDispatch<Dispatch>();
-
+	const intl = useIntl();
 	const [imgPreview, setImgPreview] = useState('');
 	const [plate, setPlate] = useState('');
 	const inputFile = useRef<HTMLInputElement>(null);
@@ -66,7 +67,7 @@ const ReadPlate: React.FC = () => {
 
 			const f = dataURLtoFile(imgPreview, 'plate.jpg');
 			try {
-	
+
 				if (f) {
 					const resp = await ANRPManager.detectPlate(f);
 					console.log('Response received:', resp);
@@ -104,8 +105,15 @@ const ReadPlate: React.FC = () => {
 
 	return (
 		<IonPage className="plate-scan-page">
-			<div className="heading-container"><IonText color="primary" class="heading">Home</IonText><IonText color="primary" class="subtitle">Scan the plate
-				number</IonText></div>
+			<div className="heading-container">
+				<IonText color="primary" class="heading">
+					{intl.formatMessage({ id: 'Receive Item', defaultMessage: 'Receive Item' })}
+				</IonText>
+				<IonText color="primary" class="subtitle">
+					{intl.formatMessage({ id: 'Scan the plate number', defaultMessage: 'Scan the plate number' })}
+					
+				</IonText>
+			</div>
 			<div className="plate-scan-container">
 				{imgPreview === '' ? (<Webcam
 					audio={false}
@@ -125,7 +133,8 @@ const ReadPlate: React.FC = () => {
 								}
 							}}
 						>
-							Capture photo
+							{intl.formatMessage({ id: 'Capture photo', defaultMessage: 'Capture photo' })}
+							
 						</StyledButton>
 					)}
 				</Webcam>) : (<IonImg className="camera" src={imgPreview} />)}
@@ -143,7 +152,7 @@ const ReadPlate: React.FC = () => {
 				}} />
 				{plate !== '' && (
 					<div className="plate-scan-result-container">
-						<div className="plate-2"><IonText style={{ textAlign: 'center' }}>{plate.slice(0,2)}</IonText></div>
+						<div className="plate-2"><IonText style={{ textAlign: 'center' }}>{plate.slice(0, 2)}</IonText></div>
 						<div className="plate-rest">
 							<IonText style={{ textAlign: 'center' }}>{plate.slice(2)}</IonText>
 							<div className="plate-country">
@@ -153,7 +162,7 @@ const ReadPlate: React.FC = () => {
 						</div>
 					</div>
 				)}
-				<StyledButton onClick={() => plate !== '' ? proceed() : upload()} style={{ width: '100%', padding: '0px 2rem' }}>{plate !== '' ? 'Confirm' : 'Upload'}</StyledButton>
+				<StyledButton onClick={() => plate !== '' ? proceed() : upload()} style={{ width: '100%', padding: '0px 2rem' }}>{plate !== '' ? intl.formatMessage({ id: 'Confirm', defaultMessage: 'Confirm' }) : intl.formatMessage({ id: 'Upload', defaultMessage: 'Upload' })}</StyledButton>
 			</div>
 		</IonPage>
 	);

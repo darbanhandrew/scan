@@ -1,126 +1,140 @@
 import { useEffect, useState } from 'react';
 import {
-	IonButton,
-	IonInput,
-	IonItem,
-	IonLabel,
-	IonList,
-	IonNote,
 	IonPage,
-	IonSegment,
-	IonSegmentButton
+	IonText
 } from "@ionic/react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router";
-import { Dispatch, RootState } from "../../store";
+import { Dispatch } from "../../store";
 import "./receipt.css";
+import "../Home.css";
+import "../Login/login.css";
+import { FrappeRequestManager } from '../../util/FrappeNode';
+import { PurchaseReceipt } from '../../types/PurchaseReceipt.type';
+import StyledButton from '../../theme/components/Button';
+import StyledInput from '../../theme/components/Input';
+import { useIntl } from 'react-intl';
 
 const Receipt: React.FC = () => {
 
 	const dispatch = useDispatch<Dispatch>();
-	const purchaseReceiptsState = useSelector((state: RootState) => state.purchaseReceipts);
-	const history = useHistory();
-	const params = useParams<{ index: string | undefined }>();
 
+	const history = useHistory();
+	const params = useParams<{ docname: string | undefined }>();
+
+	const intl = useIntl();
+
+	const [receipt, setReceipt] = useState<PurchaseReceipt>();
+	const [stock, setChooseStock] = useState<string>();
 	const [loading, setLoading] = useState(true);
-	
 	const [errors, setError] = useState<{
-		supplierError: string | undefined;
-		itemError: string | undefined;
+
 		stockError: string | undefined;
 	}>({
-		supplierError: undefined,
-		itemError: undefined,
+
 		stockError: undefined,
 	})
 
 	useEffect(() => {
 
-		const index = parseInt(params.index || '0')
-		if (index >= 0 && index < purchaseReceiptsState.receipts.length) {
+		if (params.docname) {
+			loadDoc(params.docname)
+		} else {
 			setLoading(false);
 		}
-	}, [params, purchaseReceiptsState])
 
-	// const proceed = () => {
+	}, [params])
 
-	// 	let supplierError: string | undefined = undefined;
-	// 	let itemError: string | undefined = undefined;
-	// 	let stockError: string | undefined = undefined;
-		
-		
+	const loadDoc = async (docname: string) => {
+		try {
+			const resp = await FrappeRequestManager.getDocument('Purchase Receipt', docname, ["*"]);
+			setReceipt(resp.data.data);
+			setLoading(false);
+		} catch (err) {
+			console.log(err);
+			setLoading(false);
+		}
+	};
 
-	// 	if (purchaseReceiptsState.receipts[parseInt(params.index || "0")].supplier === "" || purchaseReceiptsState.receipts[parseInt(params.index || "0")].supplier === undefined) {
+	const proceed = async () => {
 
-	// 		supplierError = "Supplier field need to be filled!";
-	// 	}
+		let stockError: string | undefined = undefined;
 
-	// 	if (purchaseReceiptsState.receipts[parseInt(params.index || "0")].item === "" || purchaseReceiptsState.receipts[parseInt(params.index || "0")].item === undefined) {
+		if (stock === "" || stock === undefined) {
 
-	// 		itemError = "Item field need to be filled!";
-	// 	}
-	// 	if (purchaseReceiptsState.receipts[parseInt(params.index || "0")].stock === "" || purchaseReceiptsState.receipts[parseInt(params.index || "0")].stock === undefined) {
+			stockError = "Stock field need to be filled!";
+		}
 
-	// 		stockError = "Stock field need to be filled!";
-	// 	}
+		const errs = {
+			stockError,
+		};
 
-	// 	const errs = {
-	// 		supplierError,
-	// 		itemError,
-	// 		stockError,
-	// 	};
+		setError(errs);
 
-	// 	setError(errs);
+		if (stock && receipt?.name) {
 
-	// 	if (purchaseReceiptsState.receipts[parseInt(params.index || "0")].supplier && purchaseReceiptsState.receipts[parseInt(params.index || "0")].item && purchaseReceiptsState.receipts[parseInt(params.index || "0")].stock) {
+			const submitForm: PurchaseReceipt = {
+				bonnet: stock,
+				step: 'Unloading'
+			};
 
-	// 		dispatch.purchaseReceipts.updateReceipt({
-	// 			index: parseInt(params.index || "0"), receipt: {
-	// 			status: 'lab-accepted'
-	// 		}});
-	// 		history.push("/tabs");
+			try {
 
-	// 	}
-	// }
+				const resp = await dispatch.purchaseReceipts.editPR({ name: receipt?.name, pr: submitForm });
+				console.log(resp);
+				history.push("/tabs");
+			} catch (err) {
+
+				console.error(err);
+			}
+		}
+	}
 
 	if (loading) return (<IonPage />)
 
 	return (
 		<IonPage className="truck">
-			<IonList className="list">
-				<IonItem className={errors.supplierError ? 'ion-invalid' : ''}>
-					<IonLabel>Supplier:</IonLabel>
-					<IonInput
-						value={purchaseReceiptsState.receipts[parseInt(params.index || "0")].supplier}
-						placeholder="Select Supplier"
-						onIonChange={e => dispatch.purchaseReceipts.updateReceipt({ index: parseInt(params.index || "0"), receipt: { supplier: e.detail.value ? e.detail.value : undefined }})}
-					/>
-					<span slot="error">{errors.supplierError || ''}</span>
-				</IonItem>
-				{/* <IonItem className={errors.itemError ? 'ion-invalid' : ''}>
-					<IonLabel>Item:</IonLabel>
-					<IonInput
-						value={purchaseReceiptsState.receipts[parseInt(params.index || "0")].item}
-						placeholder="Item"
-						onIonChange={e => dispatch.purchaseReceipts.updateReceipt({ index: parseInt(params.index || "0"), receipt: { item: e.detail.value ? e.detail.value : undefined }})}
-					/>
-					<span slot="error">{errors.itemError || ''}</span>
-				</IonItem>
-				<IonItem className={errors.stockError ? 'ion-invalid' : ''}>
-					<IonLabel>Choose stock:</IonLabel>
-					<IonInput
-						value={purchaseReceiptsState.receipts[parseInt(params.index || "0")].stock}
-						placeholder="Stock"
-						onIonChange={e => dispatch.purchaseReceipts.updateReceipt({ index: parseInt(params.index || "0"), receipt: { stock: e.detail.value ? e.detail.value : undefined }})}
-					/>
-					<span slot="error">{errors.stockError || ''}</span>
-				</IonItem> */}
-				<IonItem lines="none" style={{ marginTop: '24px' }}>
-					<IonButton style={{ width: '100%', height: '38px' }} /* onClick={() => proceed()} */>
-						Confirm
-					</IonButton>
-				</IonItem>
-			</IonList>
+			<div className="heading-container">
+				<IonText color="primary" class="heading">
+					{intl.formatMessage({ id: "Title", defaultMessage: "Title" })}
+				</IonText>
+				<IonText color="primary" class="subtitle">
+					{intl.formatMessage({ id: "Choose stock and direct the driver", defaultMessage: "Choose stock and direct the driver" })}
+				</IonText>
+			</div>
+			<div className="form-container" style={{ flex: 5, justifyContent: 'flex-start' }}>
+				<div className="field-container">
+					<div className="item-container">
+						<StyledInput
+							value={receipt?.supplier}
+							placeholder={intl.formatMessage({ id: "Supplier", defaultMessage: "Supplier" })}
+							disabled
+						/>
+					</div>
+					<div className="item-container">
+						<StyledInput
+							value={receipt && receipt.items && receipt?.items?.length > 0 ? receipt?.items[0].item_name : 'Unknown'}
+							placeholder={intl.formatMessage({ id: "Item", defaultMessage: "Item" })}
+							disabled
+						/>
+					</div>
+
+					<div className="item-container">
+						<StyledInput
+							value={stock}
+							placeholder={intl.formatMessage({ id: "Choose Stock", defaultMessage: "Choose Stock" })}
+							onIonChange={(e) => setChooseStock(e.detail.value || undefined)}
+						/>
+						<span slot="error">{errors.stockError || ''}</span>
+					</div>
+					<div className="single-item-container">
+						<StyledButton style={{ width: '100%' }} onClick={() => proceed()}>
+							{intl.formatMessage({ id: "Save", defaultMessage: "Save" })}
+						</StyledButton>
+					</div>
+				</div>
+
+			</div>
 		</IonPage>
 	);
 };

@@ -207,9 +207,15 @@ export const FrappeRequestManager = {
 			throw err;
 		}
 	},
-	getDocument: async (doctype: string, id: string) => {
+	getDocument: async (doctype: string, id: string, fields: string[]) => {
 		try {
-			const resp = await ConfiguredAxios.get(`/resource/${doctype}/${id}`);
+			const resp = await ConfiguredAxios.get(`/resource/${doctype}/${id}`, {
+				params: {
+					...(fields.length > 0 && {
+						fields: `["${fields.join('","')}"]`
+					})
+				}
+			});
 			console.log('success', resp);
 			return resp;
 		} catch (err) {
@@ -227,9 +233,9 @@ export const FrappeRequestManager = {
 			throw err;
 		}
 	},
-	editDocument: async (doctype: string, id: number, data: Record<string, any>) => {
+	editDocument: async (doctype: string, docname: string, data: Record<string, any>) => {
 		try {
-			const resp = await ConfiguredAxios.put(`/resource/${doctype}/${id}`, data);
+			const resp = await ConfiguredAxios.put(`/resource/${doctype}/${docname}`, data);
 			console.log('success', resp);
 		} catch (err) {
 

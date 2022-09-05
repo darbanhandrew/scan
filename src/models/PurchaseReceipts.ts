@@ -3,23 +3,26 @@ import { RootModel } from ".";
 import { PurchaseReceipt } from "../types/PurchaseReceipt.type";
 import { FrappeRequestManager } from "../util/FrappeNode";
 
+// purchace receipt type excluding step
+type PurchaseReceiptData = Omit<PurchaseReceipt, "step">;
+
 export const purchaseReceipts = createModel<RootModel>()({
 	state: {
 		draft: null,
-		receipts: [] as PurchaseReceipt[],
+		// receipts: [] as PurchaseReceipt[],
 	} as {
 		draft: PurchaseReceipt | null;
-		receipts: PurchaseReceipt[];
+		// receipts: PurchaseReceipt[];
 	}, // initial state
 	reducers: {
 		// handle state changes with pure functions
-		updateDraft(state, payload: PurchaseReceipt) {
+		updateDraft(state, payload: PurchaseReceiptData) {
+
+			const draft: PurchaseReceipt = { ...(state.draft || { step: 'Undefined' }), ...payload, }
+
 			return {
 				...state,
-				draft: {
-					...(state.draft || {}),
-					...payload,
-				},
+				draft
 			};
 		},
 		removeDraft(state) {
@@ -29,16 +32,16 @@ export const purchaseReceipts = createModel<RootModel>()({
 				draft: null,
 			};
 		},
-		updateReceipt(state, payload: { index: number; receipt: PurchaseReceipt}) {
+		// updateReceipt(state, payload: { index: number; receipt: PurchaseReceipt}) {
 
-			const { index, receipt } = payload;
-			const receipts = [...state.receipts];
-			receipts[index] = { ...receipts[index], ...receipt };
-			return {
-				...state,
-				receipts,
-			};
-		}
+		// 	const { index, receipt } = payload;
+		// 	const receipts = [...state.receipts];
+		// 	receipts[index] = { ...receipts[index], ...receipt };
+		// 	return {
+		// 		...state,
+		// 		receipts,
+		// 	};
+		// }
 
 	},
 	effects: (dispatch) => ({
@@ -56,21 +59,14 @@ export const purchaseReceipts = createModel<RootModel>()({
 			}
 			// dispatch.count.increment(payload);
 		},
-		async editPR(payload: PurchaseReceipt, state) {
+		async editPR(payload: { name: string; pr: PurchaseReceipt}, state) {
 
-			if (payload.idx) {
-				try {
-					const resp = await FrappeRequestManager.editDocument('Purchase Receipt', payload.idx, payload);
-					return resp;
-				} catch (err) {
-					throw err;
-				}
-			} else {
-
-				throw new Error('No idx provided');
+			try {
+				const resp = await FrappeRequestManager.editDocument('Purchase Receipt', payload.name, payload.pr);
+				return resp;
+			} catch (err) {
+				throw err;
 			}
-
-			
 			// dispatch.count.increment(payload);
 		}
 	}),
