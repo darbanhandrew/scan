@@ -1,19 +1,18 @@
 import { IonContent, IonFab, IonFabButton, IonFabList, IonIcon, IonRouterOutlet } from "@ionic/react";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Redirect, Route } from "react-router-dom";
-import AuthContext from "../context/AuthContext";
+
 import Login from "../pages/Login";
 import { IonReactRouter } from "@ionic/react-router";
 // import Menu from "../components/menu";
 import TabBar from "../components/tab-bar";
-import ReadPlate from "../pages/PlateScan";
-import { languageOutline, logoVimeo } from "ionicons/icons";
+import { languageOutline } from "ionicons/icons";
 import useConfig from "../hooks/useConfig";
 
 
 const Routes = () => {
 
-	const authContext = useContext(AuthContext);
+	
 	const { locale, onChangeLocale, onChangeLocaleAndRTL } = useConfig();
 	const [language, setLanguage] = useState<string>(locale);
 
@@ -70,9 +69,6 @@ const Routes = () => {
 				</IonRouterOutlet>
 
 				{/* <Route render={() => authContext.auth.userType === null ? <Redirect to="/login" /> : <Redirect to={`/${authContext.auth.prefix || 'stock'}/home`} />} /> */}
-
-
-
 			</IonReactRouter>
 		</IonContent>
 	);

@@ -1,14 +1,13 @@
-import React, { useContext } from "react";
+import { useSelector } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
-import AuthContext from "../context/AuthContext";
+import { RootState } from "../store";
 
 
 const ProtectedRoute = ({ component, access, exact, ...rest }: { component: JSX.Element; access: string | null; exact: boolean | undefined; path: string }) => {
 
-	const authContext = useContext(AuthContext);
-	const { auth } = authContext;
+	const authState = useSelector((state: RootState) => state.auth);
 
-	if (auth.userType === null || auth.userType === access) {
+	if (authState.userType === null || authState.userType === access) {
 		return <Route {...rest}>{component}</Route>;
 	}
 	return (<Redirect to="/login" />);

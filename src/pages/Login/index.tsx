@@ -1,32 +1,31 @@
 
 import {
-	IonButton,
 	IonIcon,
 	IonImg,
-	IonInput,
-	IonLabel,
 	IonPage,
 	IonText
 } from "@ionic/react";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router";
-import AuthContext from "../../context/AuthContext";
 import "./login.css";
-import FrappeClient, { FrappeRequestManager } from '../../util/FrappeNode';
+import FrappeClient from '../../util/FrappeNode';
 import StyledInput from "../../theme/components/Input";
 import StyledButton from "../../theme/components/Button";
 import { arrowForward } from "ionicons/icons";
 import { useIntl } from "react-intl";
+import { useDispatch } from "react-redux";
+import { Dispatch } from "../../store";
 // import AxiosClient from '../../config/AxiosConfig';
 
 const Login: React.FC = () => {
+
+	const dispatch = useDispatch<Dispatch>();
 
 	const [username, setUsername] = useState<string>();
 	const [password, setPassword] = useState<string>();
 	const intl = useIntl();
 
 	const history = useHistory();
-	const authContext = useContext(AuthContext);
 
 
 	const login = async (user: string, prefix: string) => {
@@ -44,7 +43,7 @@ const Login: React.FC = () => {
 			const resp = await new FrappeClient().authenticate(username, password)
 			console.log(resp);
 			if (resp?.data.full_name) {
-				authContext.auth.login(user, prefix);
+				dispatch.auth.login({ userType: user, prefix})
 				// authContext.auth.login('stock-manager', 'stock');
 				// authContext.auth.login('accountant', 'accountant');
 				history.push("/tabs");

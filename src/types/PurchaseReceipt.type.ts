@@ -112,4 +112,5 @@ export interface PurchaseReceipt {
 	transporter_name?: null;
 	workflow_state?: string;
 	bonnet?: string;
+	full_truck_weight?: number;
 }

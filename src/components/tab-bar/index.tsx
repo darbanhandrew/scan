@@ -15,50 +15,52 @@ import SendItemDest from "../../pages/SendItemDest";
 import SendItemQR from "../../pages/SendItemQR";
 import Truck from "../../pages/Truck";
 // import Menu from "../menu";
-import { useContext } from "react";
-import AuthContext from "../../context/AuthContext";
+
 import ReadPlate from "../../pages/PlateScan";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 
 const TabBar: React.FC = () => {
 
-	const authContext = useContext(AuthContext);
+
+	const authState = useSelector((state: RootState) => state.auth);
 
 	return (
 		<IonTabs>
 			{/* <Menu /> */}
 			<IonRouterOutlet id="tab">
-				<Route exact path="/tabs/stock/home" render={(props) => authContext.auth.userType === 'stock-manager' ? <Home /> : <Redirect to="/login" />} />
-				<Route exact path="/tabs/stock/read-plate" render={(props) => authContext.auth.userType === 'stock-manager' ? <ReadPlate /> : <Redirect to="/login" />} />
-				<Route exact path="/tabs/stock/check-in" render={(props) => authContext.auth.userType === 'stock-manager' ? <Truck /> : <Redirect to="/login" />} />
-				<Route exact path="/tabs/receipt/:docname" render={(props) => authContext.auth.userType === 'stock-manager' ? <Receipt /> : <Redirect to="/login" />} />
-				<Route exact path="/tabs/check-out/:docname" render={(props) => authContext.auth.userType === 'stock-manager' ? <CheckOut /> : <Redirect to="/login" />} />
+				<Route exact path="/tabs/stock/home" render={(props) => authState.userType === 'stock-manager' ? <Home /> : <Redirect to="/login" />} />
+				<Route exact path="/tabs/stock/read-plate" render={(props) => authState.userType === 'stock-manager' ? <ReadPlate /> : <Redirect to="/login" />} />
+				<Route exact path="/tabs/stock/check-in" render={(props) => authState.userType === 'stock-manager' ? <Truck /> : <Redirect to="/login" />} />
+				<Route exact path="/tabs/receipt/:docname" render={(props) => authState.userType === 'stock-manager' ? <Receipt /> : <Redirect to="/login" />} />
+				<Route exact path="/tabs/check-out/:docname" render={(props) => authState.userType === 'stock-manager' ? <CheckOut /> : <Redirect to="/login" />} />
 
 
-				<Route exact path="/tabs/send-item" render={(props) => authContext.auth.userType === 'stock-manager' ? <SendItem /> : <Redirect to="/login" />} />
-				<Route exact path="/tabs/send-item-dest/:index" render={(props) => authContext.auth.userType === 'stock-manager' ? <SendItemDest /> : <Redirect to="/login" />} />
-				<Route exact path="/tabs/send-item-qr/:index" render={(props) => authContext.auth.userType === 'stock-manager' ? <SendItemQR /> : <Redirect to="/login" />} />
-				<Route exact path="/tabs/scan-result/:index" render={(props) => authContext.auth.userType === 'stock-manager' ? <ScanResult /> : <Redirect to="/login" />} />
-				<Route exact path="/tabs/direct-driver/:index" render={(props) => authContext.auth.userType === 'stock-manager' ? <DirectDriver /> : <Redirect to="/login" />} />
+				<Route exact path="/tabs/send-item" render={(props) => authState.userType === 'stock-manager' ? <SendItem /> : <Redirect to="/login" />} />
+				<Route exact path="/tabs/send-item-dest/:docname" render={(props) => authState.userType === 'stock-manager' ? <SendItemDest /> : <Redirect to="/login" />} />
+				<Route exact path="/tabs/send-item-qr/:docname" render={(props) => authState.userType === 'stock-manager' ? <SendItemQR /> : <Redirect to="/login" />} />
+				<Route exact path="/tabs/scan-result/:docname" render={(props) => authState.userType === 'stock-manager' ? <ScanResult /> : <Redirect to="/login" />} />
+				<Route exact path="/tabs/direct-driver/:docname" render={(props) => authState.userType === 'stock-manager' ? <DirectDriver /> : <Redirect to="/login" />} />
 
 
-				<Route exact path="/tabs/accountant/home" render={(props) => authContext.auth.userType === 'accountant' ? <AccountantHome /> : <Redirect to="/login" />} />
+				<Route exact path="/tabs/accountant/home" render={(props) => authState.userType === 'accountant' ? <AccountantHome /> : <Redirect to="/login" />} />
 
 
-				<Route exact path="/tabs/lab/home" render={(props) => authContext.auth.userType === 'lab-manager' ? <LabHome /> : <Redirect to="/login" />} />
+				<Route exact path="/tabs/lab/home" render={(props) => authState.userType === 'lab-manager' ? <LabHome /> : <Redirect to="/login" />} />
 
-				<Route exact path="/tabs/scan" render={(props) => authContext.auth.userType !== null ? <Scan /> : <Redirect to="/login" />} />
+				<Route exact path="/tabs/scan" render={(props) => authState.userType !== null ? <Scan /> : <Redirect to="/login" />} />
 
-				<Route exact path="/tabs/list" render={(props) => authContext.auth.userType !== null ? <ReceiptList /> : <Redirect to="/login" />} />
+				<Route exact path="/tabs/list" render={(props) => authState.userType !== null ? <ReceiptList /> : <Redirect to="/login" />} />
 
 				<Route exact path="/tabs">
-					<Redirect to={`/tabs/${authContext.auth.prefix || 'stock'}/home`} />
+					<Redirect to={`/tabs/${authState.prefix || 'stock'}/home`} />
 				</Route>
-				{/* <Route exact path="*" render={(props) => authContext.auth.userType !== null ? <Redirect to={`/tabs/${authContext.auth.prefix || 'stock'}/home`} /> : <Redirect to="/login" />} /> */}
+				{/* <Route exact path="*" render={(props) => authState.userType !== null ? <Redirect to={`/tabs/${authState.prefix || 'stock'}/home`} /> : <Redirect to="/login" />} /> */}
 			</IonRouterOutlet>
 
 			<IonTabBar slot="bottom" color="primary">
-				<IonTabButton tab="home" href={`/tabs/${authContext.auth.prefix || 'stock'}/home`}>
+				<IonTabButton tab="home" href={`/tabs/${authState.prefix || 'stock'}/home`}>
 					<IonIcon icon={homeOutline} />
 					<IonLabel>Home</IonLabel>
 				</IonTabButton>

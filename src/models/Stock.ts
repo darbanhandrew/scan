@@ -1,47 +1,17 @@
 import { createModel } from "@rematch/core";
 import { RootModel } from ".";
-
-export interface Stock {
-	id?: number | undefined;
-	source?: string | undefined;
-	supplier?: string | undefined;
-	licensePlate?: string | undefined;
-	date?: string | undefined;
-	item?: string | undefined;
-	stock?: string | undefined;
-	weight_car_item?: number | undefined;
-	weight_car?: number | undefined;
-	weight_product?: number | undefined;
-	driver_name?: string | undefined;
-	driver_phone?: string | undefined;
-	destination?: string | undefined;
-	child_stock_number?: string | undefined;
-	complement_info1?: string | undefined;
-	complement_info2?: string | undefined;
-	qr_base64?: string | undefined;
-	harvestMethod?: string | undefined;
-	humidity?: string | undefined;
-	purity?: string | undefined;
-	status?: 'initiated' | 'cargo-underway1' | 'cargo-underway2' | 'cargo-transferred' | 'lab-report' | undefined
-}
+import { StockEntry } from "../types/StockEntry.type";
+import { FrappeRequestManager } from "../util/FrappeNode";
 
 export const stock = createModel<RootModel>()({
 	state: {
-		draft: {} as Stock,
-		active: {} as Stock,
-		items: [] as Stock[],
+		draft: {} as StockEntry,
+		active: {} as StockEntry,
 	}, // initial state
 	reducers: {
 		// handle state changes with pure functions
-		saveDraft(state) {
-
-			return {
-				...state,
-				items: [...state.items, state.draft],
-				draft: {},
-			};
-		},
-		updateDraft(state, payload: Stock) {
+		
+		updateDraft(state, payload: StockEntry) {
 			return {
 				...state,
 				draft: {
@@ -57,25 +27,43 @@ export const stock = createModel<RootModel>()({
 				draft: {},
 			};
 		},
-		updateStock(state, payload: { index: number; item: Stock }) {
-
-			const { index, item } = payload;
-			const items = [...state.items];
-			items[index] = { ...items[index], ...item };
-			return {
-				...state,
-				items,
-			};
-		}
 
 	},
 	effects: (dispatch) => ({
 		// handle state changes with impure functions.
 		// use async/await for async actions
-		async incrementAsync(payload: number, state) {
-			console.log("This is current root state", state);
-			await new Promise((resolve) => setTimeout(resolve, 1000));
+
+		async submitSE(payload: StockEntry, state) {
+
+			try {
+				const resp = await FrappeRequestManager.addDocument('Stock Entry', payload);
+				dispatch.purchaseReceipts.removeDraft();
+				return resp;
+			} catch (err) {
+				throw err;
+			}
 			// dispatch.count.increment(payload);
 		},
+		async editSE(payload: { name: string; se: StockEntry }, state) {
+
+			try {
+				const resp = await FrappeRequestManager.editDocument('Stock Entry', payload.name, payload.se);
+				return resp;
+			} catch (err) {
+				throw err;
+			}
+			// dispatch.count.increment(payload);
+		},
+		async getSE(payload: { name: string, fields: string[] }, state) {
+
+
+			try {
+				const resp = await FrappeRequestManager.getDocument('Stock Entry', payload.name, payload.fields);
+				return resp;
+			} catch (err) {
+				throw err;
+			}
+			// dispatch.count.increment(payload);
+		}
 	}),
 });

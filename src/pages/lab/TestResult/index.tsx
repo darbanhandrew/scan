@@ -14,14 +14,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation, useParams } from "react-router";
 import { Dispatch, RootState } from "../../../store";
 import "./sendItemDest.css";
+import { StockEntry } from '../../../types/StockEntry.type';
 
 const TestResult: React.FC = () => {
 
 	const dispatch = useDispatch<Dispatch>();
 	const stocksState = useSelector((state: RootState) => state.stock);
 	const history = useHistory();
-	const params = useParams<{ index: string | undefined }>();
-
+	const params = useParams<{ docname: string | undefined }>();
+	
+	const [stockEntry, setStockEntry] = useState<StockEntry>();
 	const [loading, setLoading] = useState(true);
 
 	const [errors, setError] = useState<{
@@ -34,54 +36,67 @@ const TestResult: React.FC = () => {
 
 	useEffect(() => {
 
-		const index = parseInt(params.index || '0')
-		if (index >= 0 && index < stocksState.items.length) {
+		if (params.docname) {
+			loadDoc(params.docname);
+		} else {
+
 			setLoading(false);
 		}
-	}, [params, stocksState])
+	}, [params])
 
-	const proceed = () => {
-
-		let humidityError: string | undefined = undefined;
-		let purityError: string | undefined = undefined;
-
-		if (stocksState.items[parseInt(params.index || "0")].humidity === "" || stocksState.items[parseInt(params.index || "0")].humidity === undefined) {
-
-			humidityError = "Median humidity field need to be filled!";
+	const loadDoc = async (docname: string) => {
+		try {
+			const resp = await dispatch.stock.getSE({ name: docname, fields: ['*'] });
+			setStockEntry(resp.data.data);
+			setLoading(false);
+		} catch (err) {
+			console.log(err);
+			setLoading(false);
 		}
+	};
 
-		if (stocksState.items[parseInt(params.index || "0")].purity === "" || stocksState.items[parseInt(params.index || "0")].purity === undefined) {
+	// const proceed = () => {
 
-			purityError = "Purity field need to be filled!";
-		}
-		const errs = {
-			humidityError,
-			purityError,
-		};
+	// 	let humidityError: string | undefined = undefined;
+	// 	let purityError: string | undefined = undefined;
 
-		setError(errs);
+	// 	if (stockEntry.humidity === "" || stockEntry.humidity === undefined) {
 
-		if (stocksState.items[parseInt(params.index || "0")].humidity && stocksState.items[parseInt(params.index || "0")].purity) {
+	// 		humidityError = "Median humidity field need to be filled!";
+	// 	}
 
-			dispatch.stock.updateStock({
-				index: parseInt(params.index || "0"), item: {
-					status: 'lab-report',
-				}
-			});
-			history.push(`/list`);
+	// 	if (stockEntry.purity === "" || stockEntry.purity === undefined) {
 
-		}
-	}
+	// 		purityError = "Purity field need to be filled!";
+	// 	}
+	// 	const errs = {
+	// 		humidityError,
+	// 		purityError,
+	// 	};
+
+	// 	setError(errs);
+
+	// 	if (stockEntry.humidity && stockEntry.purity) {
+
+	// 		dispatch.stock.updateStock({
+	// 			index: parseInt(params.index || "0"), item: {
+	// 				status: 'lab-report',
+	// 			}
+	// 		});
+	// 		history.push(`/list`);
+
+	// 	}
+	// }
 
 	if (loading) return (<IonPage />)
 
 	return (
 		<IonPage className="test">
-			<IonList className="list">
+			{/* <IonList className="list">
 				<IonItem>
 					<IonLabel>Supplier:</IonLabel>
 					<IonInput
-						value={stocksState.items[parseInt(params.index || "0")].supplier}
+						value={stockEntry.supplier}
 						placeholder="Supplier"
 						disabled
 					/>
@@ -89,7 +104,7 @@ const TestResult: React.FC = () => {
 				<IonItem>
 					<IonLabel>Item:</IonLabel>
 					<IonInput
-						value={stocksState.items[parseInt(params.index || "0")].item}
+						value={stockEntry.item}
 						placeholder="Item"
 						disabled
 					/>
@@ -97,7 +112,7 @@ const TestResult: React.FC = () => {
 				<IonItem>
 					<IonLabel>Complemen.info:</IonLabel>
 					<IonInput
-						value={stocksState.items[parseInt(params.index || "0")].complement_info1}
+						value={stockEntry.complement_info1}
 						placeholder="Complemen.info"
 						onIonChange={e => dispatch.stock.updateStock({ index: parseInt(params.index || "0"), item: { complement_info1: e.detail.value ? e.detail.value : undefined } })}
 					/>
@@ -105,7 +120,7 @@ const TestResult: React.FC = () => {
 				<IonItem>
 					<IonLabel>Complemen.info2:</IonLabel>
 					<IonInput
-						value={stocksState.items[parseInt(params.index || "0")].complement_info2}
+						value={stockEntry.complement_info2}
 						placeholder="Complemen.info2"
 						onIonChange={e => dispatch.stock.updateStock({ index: parseInt(params.index || "0"), item: { complement_info2: e.detail.value ? e.detail.value : undefined } })}
 					/>
@@ -113,7 +128,7 @@ const TestResult: React.FC = () => {
 				<IonItem className={errors.humidityError ? 'ion-invalid' : ''}>
 					<IonLabel>Median humidity:</IonLabel>
 					<IonInput
-						value={stocksState.items[parseInt(params.index || "0")].humidity}
+						value={stockEntry.humidity}
 						placeholder="Median humidity"
 						onIonChange={e => dispatch.stock.updateStock({ index: parseInt(params.index || "0"), item: { humidity: e.detail.value ? e.detail.value : undefined } })}
 					/>
@@ -122,7 +137,7 @@ const TestResult: React.FC = () => {
 				<IonItem className={errors.purityError ? 'ion-invalid' : ''}>
 					<IonLabel>Purity:</IonLabel>
 					<IonInput
-						value={stocksState.items[parseInt(params.index || "0")].purity}
+						value={stockEntry.purity}
 						placeholder="Purity"
 						onIonChange={e => dispatch.stock.updateStock({ index: parseInt(params.index || "0"), item: { purity: e.detail.value ? e.detail.value : undefined } })}
 					/>
@@ -133,7 +148,7 @@ const TestResult: React.FC = () => {
 						Confirm
 					</IonButton>
 				</IonItem>
-			</IonList>
+			</IonList> */}
 		</IonPage>
 	);
 };

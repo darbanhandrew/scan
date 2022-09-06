@@ -228,6 +228,7 @@ export const FrappeRequestManager = {
 
 			const resp = await ConfiguredAxios.post(`/resource/${doctype}`, data);
 			console.log('add document success', doctype, resp);
+			return resp;
 		} catch (err) {
 
 			throw err;
@@ -237,6 +238,7 @@ export const FrappeRequestManager = {
 		try {
 			const resp = await ConfiguredAxios.put(`/resource/${doctype}/${docname}`, data);
 			console.log('success', resp);
+			return resp;
 		} catch (err) {
 
 			throw err;
@@ -246,6 +248,7 @@ export const FrappeRequestManager = {
 		try {
 			const resp = await ConfiguredAxios.delete(`/resource/${doctype}/${id}`);
 			console.log('success', resp);
+			return resp;
 		} catch (err) {
 
 			throw err;

@@ -22,7 +22,6 @@ import { store } from "./store";
 
 /* Theme variables */
 import "./theme/variables.css";
-import { AuthProvider } from "./context/AuthContext";
 import Routes from "./routes";
 import Locales from "./util/Locale";
 import { ConfigProvider } from "./context/ConfigContext";
@@ -35,11 +34,11 @@ const App: React.FC = () => {
 		<Provider store={store}>
 			<ConfigProvider>
 				<Locales>
-					<AuthProvider>
-						<IonApp>
-							<Routes />
-						</IonApp>
-					</AuthProvider >
+
+					<IonApp>
+						<Routes />
+					</IonApp>
+
 				</Locales>
 			</ConfigProvider>
 		</Provider>

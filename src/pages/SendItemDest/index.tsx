@@ -3,24 +3,28 @@ import {
 	IonButton,
 	IonInput,
 	IonItem,
-	IonLabel,
 	IonList,
-	IonNote,
 	IonPage,
-	IonSegment,
-	IonSegmentButton
-} from "@ionic/react";
+	IonText} from "@ionic/react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation, useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { Dispatch, RootState } from "../../store";
 import "./sendItemDest.css";
+import "../Home.css";
+import "../Login/login.css";
+import { useIntl } from 'react-intl';
+import { StockEntry } from '../../types/StockEntry.type';
+import StyledButton from '../../theme/components/Button';
+import StyledInput from '../../theme/components/Input';
 
 const SendItemDest: React.FC = () => {
 
 	const dispatch = useDispatch<Dispatch>();
 	const stocksState = useSelector((state: RootState) => state.stock);
 	const history = useHistory();
-	const params = useParams<{ index: string | undefined }>();
+	const params = useParams<{ docname: string | undefined }>();
+	const intl = useIntl();
+	const [stockEntry, setStockEntry] = useState<StockEntry>();
 
 	const [loading, setLoading] = useState(true);
 
@@ -34,23 +38,41 @@ const SendItemDest: React.FC = () => {
 
 	useEffect(() => {
 
-		const index = parseInt(params.index || '0')
-		if (index >= 0 && index < stocksState.items.length) {
+		if (params.docname) {
+			loadDoc(params.docname);
+		} else {
+			
 			setLoading(false);
 		}
-	}, [params, stocksState])
 
-	const proceed = () => {
+	}, [params])
+
+	const loadDoc = async (docname: string) => {
+		try {
+			const resp = await dispatch.stock.getSE({ name: docname, fields: ['*'] });
+			setStockEntry(resp.data.data);
+			setLoading(false);
+		} catch (err) {
+			console.log(err);
+			setLoading(false);
+		}
+	};
+
+	const proceed = async () => {
+
+		if (stockEntry === undefined) {
+			return;
+		}
 
 		let destFactorError: string | undefined = undefined;
 		let stockNoError: string | undefined = undefined;
 
-		if (stocksState.items[parseInt(params.index || "0")].destination === "" || stocksState.items[parseInt(params.index || "0")].destination === undefined) {
+		if (stockEntry.to_warehouse === "" || stockEntry.to_warehouse === undefined) {
 
 			destFactorError = "Destination factory field need to be filled!";
 		}
 
-		if (stocksState.items[parseInt(params.index || "0")].child_stock_number === "" || stocksState.items[parseInt(params.index || "0")].child_stock_number === undefined) {
+		if (stockEntry.bonnet === "" || stockEntry.bonnet === undefined) {
 
 			stockNoError = "Child stock number field need to be filled!";
 		}
@@ -61,80 +83,91 @@ const SendItemDest: React.FC = () => {
 
 		setError(errs);
 
-		if (stocksState.items[parseInt(params.index || "0")].destination && stocksState.items[parseInt(params.index || "0")].child_stock_number) {
+		if (stockEntry.to_warehouse && stockEntry.bonnet && stockEntry.name) {
 
-			dispatch.stock.updateStock({
-				index: parseInt(params.index || "0"), item: {
-					status: 'cargo-underway1',
-					weight_product: (stocksState.items[parseInt(params.index || "0")].weight_car_item || 0) - (stocksState.items[parseInt(params.index || "0")].weight_car || 0),
-				}
-			});
-			history.push(`/tabs/send-item-qr/${parseInt(params.index || "0")}`);
-
+			try {
+				const resp = await dispatch.stock.editSE({ name: stockEntry.name, se: stockEntry });
+				history.push(`/tabs/send-item-qr/${stockEntry.name}`);
+			} catch (err) {
+				console.log(err);
+			}
 		}
 	}
 
-	if (loading) return (<IonPage />)
+	if (loading || stockEntry === undefined) return (<IonPage />)
 
 	return (
 		<IonPage className="truck">
-			<IonList className="list">
-				<IonItem className={errors.destFactorError ? 'ion-invalid' : ''}>
-					<IonLabel>Destination factory:</IonLabel>
-					<IonInput
-						value={stocksState.items[parseInt(params.index || "0")].destination}
-						placeholder="Destination factory"
-						onIonChange={e => dispatch.stock.updateStock({ index: parseInt(params.index || "0"), item: { destination: e.detail.value ? e.detail.value : undefined } })}
-					/>
-					<span slot="error">{errors.destFactorError || ''}</span>
-				</IonItem>
-				<IonItem className={errors.stockNoError ? 'ion-invalid' : ''}>
-					<IonLabel>Child stock number:</IonLabel>
-					<IonInput
-						value={stocksState.items[parseInt(params.index || "0")].child_stock_number}
-						placeholder="Child stock number"
-						onIonChange={e => dispatch.stock.updateStock({ index: parseInt(params.index || "0"), item: { child_stock_number: e.detail.value ? e.detail.value : undefined } })}
-					/>
-					<span slot="error">{errors.stockNoError || ''}</span>
-				</IonItem>
-				<IonItem>
-					<IonLabel>Item name:</IonLabel>
-					<IonInput
-						value={stocksState.items[parseInt(params.index || "0")].item}
-						placeholder="Item name"
-						disabled
-					/>
-				</IonItem>
-				<IonItem>
-					<IonLabel>Harvest method:</IonLabel>
-					<IonInput
-						value={stocksState.items[parseInt(params.index || "0")].harvestMethod}
-						placeholder="Harvest method"
-						disabled
-					/>
-				</IonItem>
-				<IonItem>
-					<IonLabel>Complemen.info:</IonLabel>
-					<IonInput
-						value={stocksState.items[parseInt(params.index || "0")].complement_info1}
-						placeholder="Complemen.info"
-						disabled
-					/>
-				</IonItem>
-				<IonItem>
-					<IonLabel>Complemen.info2:</IonLabel>
-					<IonInput
-						value={stocksState.items[parseInt(params.index || "0")].complement_info2}
-						placeholder="Complemen.info2"
-						disabled
-					/>
-				</IonItem>
-				<IonItem lines="none" style={{ marginTop: '24px' }}>
-					<IonButton style={{ width: '100%', height: '38px' }} onClick={() => proceed()}>
-						Confirm
-					</IonButton>
-				</IonItem>
-			</IonList>
+			<div className="heading-container">
+				<IonText color="primary" class="heading">
+					{intl.formatMessage({ id: "Send Item", defaultMessage: "Send Item" })}
+				</IonText>
+				<IonText color="primary" class="subtitle">
+					{intl.formatMessage({ id: "Fill the form and save", defaultMessage: "Fill the form and save" })}
+				</IonText>
+			</div>
+			<div className="form-container" style={{ flex: 5, justifyContent: 'flex-start' }}>
+				<div className="field-container">
+					<div className="item-container">
+						<StyledInput
+							
+							value={stockEntry.to_warehouse}
+							placeholder={intl.formatMessage({ id: "Destination factory", defaultMessage: "Destination factory" })}
+							onIonChange={e => setStockEntry({ ...stockEntry, to_warehouse: e.detail.value ? e.detail.value : undefined })}
+						/>
+						<span slot="error">{errors.destFactorError || ''}</span>
+					</div>
+					<div className="item-container">
+						<StyledInput
+							
+							value={stockEntry.bonnet}
+							placeholder={intl.formatMessage({ id: "Child stock number", defaultMessage: "Child stock number" })}
+							onIonChange={e => setStockEntry({ ...stockEntry, bonnet: e.detail.value ? e.detail.value : undefined })}
+						/>
+						<span slot="error">{errors.stockNoError || ''}</span>
+					</div>
+					<div className="item-container">
+						<StyledInput
+							
+							value={stockEntry.items && stockEntry.items.length > 0 ? stockEntry.items[0].item_name : ''}
+							placeholder={intl.formatMessage({ id: "Item name", defaultMessage: "Item name" })}
+							disabled
+						/>
+					</div>
+					<div className="item-container">
+						<StyledInput
+							
+							value={stockEntry.harvest_method}
+							placeholder={intl.formatMessage({ id: "Harvest method", defaultMessage: "Harvest method" })}
+							disabled
+						/>
+					</div>
+					
+					<div className="item-container">
+						<StyledInput
+							
+							value={stockEntry.complementary_info1}
+							placeholder={intl.formatMessage({ id: "Complemen.info", defaultMessage: "Complemen.info" })}
+							disabled
+						/>
+					</div>
+					<div className="item-container">
+
+						<StyledInput
+							
+							value={stockEntry.complementary_info2}
+							placeholder={intl.formatMessage({ id: "Complemen.info", defaultMessage: "Complemen.info" }) + '2'}
+							disabled
+						/>
+					</div>
+					<div className="item-container">
+						<StyledButton style={{ width: '100%', height: '38px' }} onClick={() => proceed()}>
+							{intl.formatMessage({ id: "Confirm", defaultMessage: "Confirm" })}
+						</StyledButton>
+					</div>
+				</div>
+			</div>
+			
 		</IonPage>
 	);
 };

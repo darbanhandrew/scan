@@ -1,15 +1,16 @@
 import React from 'react';
 import { IonMenu, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonButton, IonIcon, IonLabel, IonToggle } from "@ionic/react";
-import { useContext } from "react";
-import AuthContext from "../../context/AuthContext";
 import { useHistory } from 'react-router';
 import { moon } from 'ionicons/icons';
+import { Dispatch, RootState } from '../../store';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const Menu: React.FC = () => {
 
-	const authContext = useContext(AuthContext);
 	const history = useHistory();
+	const dispatch = useDispatch<Dispatch>();
+	const authState = useSelector((state: RootState) => state.auth);
 
 	const toggleDarkModeHandler = () => {
 		document.body.classList.toggle("dark");
@@ -33,9 +34,9 @@ const Menu: React.FC = () => {
 					<IonItem>
 						<IonButton
 							onClick={() => {
-								if (authContext.auth.userType) {
-									console.log(authContext.auth.userType, 'logged out');
-									authContext.auth.logout();
+								if (authState.userType) {
+									console.log(authState.userType, 'logged out');
+									dispatch.auth.logout();
 									history.push('/login');
 								} else {
 									history.push('/login')
@@ -43,9 +44,9 @@ const Menu: React.FC = () => {
 							}
 							}
 							style={{ width: '100%' }}
-							color={authContext.auth.userType ? 'danger' : 'primary'}
+							color={authState.userType ? 'danger' : 'primary'}
 						>
-							{authContext.auth.userType ? 'Logout' : 'Login'}
+							{authState.userType ? 'Logout' : 'Login'}
 						</IonButton>
 					</IonItem>
 

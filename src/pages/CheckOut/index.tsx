@@ -85,6 +85,12 @@ const CheckOut: React.FC = () => {
 
 				const resp = await dispatch.purchaseReceipts.editPR({ name: receipt.name, pr: submitForm });
 				console.log(resp);
+				if (resp.data && resp.data.data) {
+					const r2 = await FrappeRequestManager.addDocument('Purchase Invoice', resp.data.data);
+					console.log(r2);
+				}
+				
+				
 				history.push("/tabs");
 			} catch (err) {
 

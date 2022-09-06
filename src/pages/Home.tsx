@@ -20,7 +20,7 @@ const Home: React.FC = () => {
 			<div className="heading-container">
 				<IonText color="primary" class="heading">
 					{/* Home */}
-					{intl.formatMessage({ id: "Home", defaultMessage: "Home" })}z
+					{intl.formatMessage({ id: "Home", defaultMessage: "Home" })}
 				</IonText>
 			</div>
 			<IonGrid className="grid-container">
