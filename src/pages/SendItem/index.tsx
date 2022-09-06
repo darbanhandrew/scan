@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
 	IonPage,
 	IonText
@@ -21,6 +21,11 @@ const SendItem: React.FC = () => {
 	const history = useHistory();
 	const intl = useIntl();
 
+
+	useEffect(() => {
+		dispatch.stock.removeDraft();
+	}, []);
+
 	const [errors, setError] = useState<{
 		emptyTruckWeightError: string | undefined;
 		truckItemWeightError: string | undefined;
@@ -33,7 +38,7 @@ const SendItem: React.FC = () => {
 		driverPhoneError: undefined,
 	})
 
-	const proceed = async () => {
+	const proceed = () => {
 
 		let emptyTruckWeightError: string | undefined = undefined;
 		let truckItemWeightError: string | undefined = undefined;
@@ -70,21 +75,9 @@ const SendItem: React.FC = () => {
 
 		if (stocksState.draft.empty_truck_weight && stocksState.draft.total_weight && stocksState.draft.driver_name && stocksState.draft.driver_phone_number) {
 
-			const submitSE: StockEntry = {
-				...stocksState.draft,
-				total_weight_difference_with_truck_weight: stocksState.draft.total_weight - stocksState.draft.empty_truck_weight,
-			};
-			try {
-				const resp = await dispatch.stock.submitSE(submitSE);
+			dispatch.stock.updateDraft({ total_weight_difference_with_truck_weight: stocksState.draft.total_weight - stocksState.draft.empty_truck_weight, })
 
-				if (resp.data.data && resp.data.data.name) {
-					history.push(`/tabs/send-item-dest/${(resp.data.data as StockEntry).name}`);
-				} else {
-					throw new Error("Error while submitting Stock Entry");
-				}
-			} catch (e) {
-				console.log(e);
-			}
+			history.push(`/tabs/send-item-dest`);
 		}
 	}
 

@@ -38,7 +38,7 @@ const TabBar: React.FC = () => {
 
 
 				<Route exact path="/tabs/send-item" render={(props) => authState.userType === 'stock-manager' ? <SendItem /> : <Redirect to="/login" />} />
-				<Route exact path="/tabs/send-item-dest/:docname" render={(props) => authState.userType === 'stock-manager' ? <SendItemDest /> : <Redirect to="/login" />} />
+				<Route exact path="/tabs/send-item-dest" render={(props) => authState.userType === 'stock-manager' ? <SendItemDest /> : <Redirect to="/login" />} />
 				<Route exact path="/tabs/send-item-qr/:docname" render={(props) => authState.userType === 'stock-manager' ? <SendItemQR /> : <Redirect to="/login" />} />
 				<Route exact path="/tabs/scan-result/:docname" render={(props) => authState.userType === 'stock-manager' ? <ScanResult /> : <Redirect to="/login" />} />
 				<Route exact path="/tabs/direct-driver/:docname" render={(props) => authState.userType === 'stock-manager' ? <DirectDriver /> : <Redirect to="/login" />} />

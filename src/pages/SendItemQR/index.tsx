@@ -4,9 +4,9 @@ import {
 	IonText
 } from "@ionic/react";
 import { QRCodeSVG } from 'qrcode.react';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router";
-import { Dispatch, RootState } from "../../store";
+import { Dispatch } from "../../store";
 import "./sendItemQR.css";
 import "../Home.css";
 import "../Login/login.css";

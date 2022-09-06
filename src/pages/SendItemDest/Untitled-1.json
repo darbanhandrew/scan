@@ -1,0 +1,15 @@
+{
+	"empty_truck_weight": 20,
+	"total_weight": 30,
+	"driver_name": "TT",
+	"driver_phone_number": "TTT",
+	"total_weight_difference_with_truck_weight": 10,
+	"to_warehouse": "gg",
+	"bonnet": "gg",
+	
+	"harvest_method": "g",
+	"complementary_info1": "g",
+	"complementary_info2": "g",
+	
+	
+}
